@@ -9,6 +9,8 @@ import androidx.compose.foundation.text.BasicText
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowForward
+import androidx.compose.material.icons.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material.icons.outlined.ArrowForward
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -22,12 +24,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.trainxpert.ui.theme.BackgroundCalendarCurrentDay
 import com.example.trainxpert.ui.theme.BackgroundCalendarDateSport
+import com.example.trainxpert.ui.theme.CalendarArrowTint
 import com.example.trainxpert.ui.theme.CardTitle
 import com.example.trainxpert.ui.theme.MainPadding
 import com.example.trainxpert.ui.theme.TitleCardFontSize
 import java.io.InputStreamReader
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+import kotlin.random.Random
 
 // Définition du modèle de données pour les sessions de sport
 data class SportSessions(val sessions: List<String>)
@@ -69,22 +73,22 @@ fun SportCalendarScreen() {
 
             Row(
                 modifier = Modifier
-                    .align(Alignment.CenterHorizontally),
-                horizontalArrangement = Arrangement.Center,
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ){
                 IconButton(onClick = { currentDate = currentDate.minusMonths(1) }) {
-                    Icon(Icons.Filled.ArrowBack, contentDescription = Icons.Filled.ArrowBack.name)
+                    Icon(Icons.Filled.KeyboardArrowLeft, contentDescription = Icons.Filled.KeyboardArrowLeft.name, tint = CalendarArrowTint)
                 }
 
                 Text(
-                    text = currentDate.month.toString() + " " + currentDate.year.toString(),
-                    color = Color.Gray,
+                    text = currentDate.month.toString().lowercase().replaceFirstChar { it.uppercase() } + " " + currentDate.year.toString(),
+                    color = Color.Black,
                     fontSize = 15.sp,
                 )
 
                 IconButton(onClick = { currentDate = currentDate.plusMonths(1) }) {
-                    Icon(Icons.Filled.ArrowForward, contentDescription = Icons.Filled.ArrowForward.name)
+                    Icon(Icons.Filled.KeyboardArrowRight, contentDescription = Icons.Filled.KeyboardArrowRight.name, tint = CalendarArrowTint)
                 }
             }
 
@@ -111,7 +115,7 @@ fun CalendarView(currentDate: LocalDate) {
                     val day = (week * 7) + dayOfWeek + 1
                     if (day <= daysInMonth) {
 //                        val isSportDay = sportSessions.sessions.contains(currentDate.withDayOfMonth(day).toString())
-                          val isSportDay = (day-5)%3 != 0
+                          val isSportDay = Random.nextInt(1, 10) == 1
                         CalendarDay(day, isSportDay,currentDate == LocalDate.now())
                     }
                 }
@@ -123,8 +127,11 @@ fun CalendarView(currentDate: LocalDate) {
 @Composable
 fun CalendarDay(day: Int, isSportDay: Boolean, isCurrentDateNow : Boolean) {
     var color = if (isSportDay) BackgroundCalendarDateSport else Color.White
-    if (isCurrentDateNow && day == LocalDate.now().dayOfMonth) color = BackgroundCalendarCurrentDay
-    val texColor = if (isSportDay) Color.White else Color.Black
+    var texColor = if (isSportDay or (isCurrentDateNow && day == LocalDate.now().dayOfMonth)) Color.White else Color.Black
+    if (isCurrentDateNow && day == LocalDate.now().dayOfMonth){
+        color = BackgroundCalendarCurrentDay
+        texColor = Color.White
+    }
     Box(
         modifier = Modifier
             .padding(4.dp)
