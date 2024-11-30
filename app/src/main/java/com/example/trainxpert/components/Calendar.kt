@@ -90,7 +90,6 @@ fun SportCalendarScreen() {
 
             Spacer(modifier = Modifier.height(16.dp))
 
-
             CalendarView(currentDate)
         }
     }
@@ -113,7 +112,7 @@ fun CalendarView(currentDate: LocalDate) {
                     if (day <= daysInMonth) {
 //                        val isSportDay = sportSessions.sessions.contains(currentDate.withDayOfMonth(day).toString())
                           val isSportDay = (day-5)%3 != 0
-                        CalendarDay(day, isSportDay)
+                        CalendarDay(day, isSportDay,currentDate == LocalDate.now())
                     }
                 }
             }
@@ -122,9 +121,9 @@ fun CalendarView(currentDate: LocalDate) {
 }
 
 @Composable
-fun CalendarDay(day: Int, isSportDay: Boolean) {
+fun CalendarDay(day: Int, isSportDay: Boolean, isCurrentDateNow : Boolean) {
     var color = if (isSportDay) BackgroundCalendarDateSport else Color.White
-    if (day == LocalDate.now().dayOfMonth) color = BackgroundCalendarCurrentDay
+    if (isCurrentDateNow && day == LocalDate.now().dayOfMonth) color = BackgroundCalendarCurrentDay
     val texColor = if (isSportDay) Color.White else Color.Black
     Box(
         modifier = Modifier
