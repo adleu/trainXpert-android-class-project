@@ -17,6 +17,7 @@ import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -26,6 +27,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import com.example.trainxpert.screens.ActivityScreen
@@ -57,11 +59,26 @@ fun BottomBar() {
 //            }
 //        },
         bottomBar = {
-            BottomAppBar(modifier = Modifier.height(60.dp)) {
+            BottomAppBar(
+                modifier = Modifier.height(100.dp),
+                containerColor = Color.White
+            ) {
                 icons.forEach { icon ->
                     IconButton(onClick = icon.action, modifier = Modifier.weight(1f)) {
-                        val iconn = if (selectedTab == icon.index) icon.selectedIcon else icon.unselectedIcon
-                        Icon(iconn, iconn.name)
+                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                            val iconn = if (selectedTab == icon.index) icon.selectedIcon else icon.unselectedIcon
+                            Icon(iconn, iconn.name)
+                            Text(
+                                text = when (icon.index) {
+                                    0 -> "Home"
+                                    1 -> "Activity"
+                                    2 -> "History"
+                                    else -> ""
+                                },
+                                style = MaterialTheme.typography.bodySmall,
+                                color = if (selectedTab == icon.index) Color.Blue else Color.Gray
+                            )
+                        }
                     }
                 }
             }

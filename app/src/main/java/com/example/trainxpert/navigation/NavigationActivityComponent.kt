@@ -9,8 +9,8 @@ fun NavigationComponent(){
     val navController = rememberNavController()
     //viewModel
 
-NavHost(navController = navController, startDestination = ScreensActivity.HomeScreen.name) {
-    //composable()
-}
+//NavHost(navController = navController, startDestination = ScreensActivity.HomeScreen.name) {
+//    //composable()
+//}
 
 }
