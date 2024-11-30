@@ -109,6 +109,7 @@ fun CalendarView(currentDate: LocalDate) {
             .background(Color.White)
             .fillMaxWidth()
     ) {
+        CalendarDayNames()
         for (week in 0 until daysInMonth / 7 + 1) {
             Row {
                 for (dayOfWeek in 0 until 7) {
@@ -119,6 +120,24 @@ fun CalendarView(currentDate: LocalDate) {
                         CalendarDay(day, isSportDay,currentDate == LocalDate.now())
                     }
                 }
+            }
+        }
+    }
+}
+
+@Composable
+fun CalendarDayNames(){
+    val weekDays = listOf("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")
+    Row {
+        weekDays.forEach { jour ->
+            Box(
+                modifier = Modifier
+                    .padding(4.dp)
+                    .size(40.dp)
+                    .background(Color.White)
+                    .wrapContentSize(Alignment.Center)
+            ) {
+                Text(text = jour, color = Color.Gray)
             }
         }
     }
