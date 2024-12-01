@@ -29,6 +29,7 @@ import com.example.trainxpert.ui.theme.CardTitle
 import com.example.trainxpert.ui.theme.MainPadding
 import com.example.trainxpert.ui.theme.TitleCardFontSize
 import java.io.InputStreamReader
+import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import kotlin.random.Random
@@ -69,7 +70,7 @@ fun SportCalendarScreen() {
                     .align(Alignment.Start)
             )
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(8.dp))
 
             Row(
                 modifier = Modifier
@@ -109,7 +110,7 @@ fun CalendarView(currentDate: LocalDate) {
             .background(Color.White)
             .fillMaxWidth()
     ) {
-        CalendarDayNames()
+        CalendarDayNames(getFirstDayOfWeekIndex(currentDate.year.toInt(),currentDate.monthValue))
         for (week in 0 until daysInMonth / 7 + 1) {
             Row {
                 for (dayOfWeek in 0 until 7) {
@@ -126,10 +127,11 @@ fun CalendarView(currentDate: LocalDate) {
 }
 
 @Composable
-fun CalendarDayNames(){
+fun CalendarDayNames(startDayIndex : Int){
     val weekDays = listOf("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")
+    val shiftedWeekDays = weekDays.drop(startDayIndex) + weekDays.take(startDayIndex)
     Row {
-        weekDays.forEach { jour ->
+        shiftedWeekDays.forEach { jour ->
             Box(
                 modifier = Modifier
                     .padding(4.dp)
@@ -171,6 +173,25 @@ fun CalendarDay(day: Int, isSportDay: Boolean, isCurrentDateNow : Boolean) {
 //    val sportSessionsType = object : TypeToken<SportSessions>() {}.type
 //    return Gson().fromJson(reader, sportSessionsType)
 //}
+
+fun getFirstDayOfWeekIndex(year: Int, month: Int): Int {
+    // Obtenir le premier jour du mois
+    val firstDayOfMonth = LocalDate.of(year, month, 1)
+
+    // Récupérer le jour de la semaine (LUNDI, MARDI, etc.)
+    val dayOfWeek = firstDayOfMonth.dayOfWeek
+
+    // Convertir le jour en index correspondant à ta liste
+    return when (dayOfWeek) {
+        DayOfWeek.MONDAY -> 0
+        DayOfWeek.TUESDAY -> 1
+        DayOfWeek.WEDNESDAY -> 2
+        DayOfWeek.THURSDAY -> 3
+        DayOfWeek.FRIDAY -> 4
+        DayOfWeek.SATURDAY -> 5
+        DayOfWeek.SUNDAY -> 6
+    }
+}
 
 @Preview(showBackground = false)
 @Composable
