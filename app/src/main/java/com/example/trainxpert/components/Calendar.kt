@@ -28,9 +28,12 @@ import com.example.trainxpert.ui.theme.CalendarArrowTint
 import com.example.trainxpert.ui.theme.CardTitle
 import com.example.trainxpert.ui.theme.MainPadding
 import com.example.trainxpert.ui.theme.TitleCardFontSize
+import com.example.trainxpert.viewmodels.LocalSportSessionViewModel
 import java.io.InputStreamReader
 import java.time.DayOfWeek
+import java.time.Instant
 import java.time.LocalDate
+import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import kotlin.random.Random
 
@@ -102,6 +105,9 @@ fun SportCalendarScreen() {
 
 @Composable
 fun CalendarView(currentDate: LocalDate) {
+    val viewModel = LocalSportSessionViewModel.current
+    val sessions by viewModel.sessions.collectAsState(initial = emptyList())
+
     val daysInMonth = currentDate.lengthOfMonth()
 
     // Afficher les jours du mois
@@ -117,7 +123,10 @@ fun CalendarView(currentDate: LocalDate) {
                     val day = (week * 7) + dayOfWeek + 1
                     if (day <= daysInMonth) {
 //                        val isSportDay = sportSessions.sessions.contains(currentDate.withDayOfMonth(day).toString())
-                          val isSportDay = Random.nextInt(1, 10) == 1
+                        val isSportDay = sessions.any { session ->
+                            session.dateTime.toLocalDate() == currentDate.withDayOfMonth(day)
+                        }
+//                        val isSportDay = Random.nextInt(1, 10) == 1
                         CalendarDay(day, isSportDay,currentDate == LocalDate.now())
                     }
                 }

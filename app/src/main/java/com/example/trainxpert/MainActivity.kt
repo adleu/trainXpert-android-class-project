@@ -6,25 +6,16 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.room.Room
-import com.example.trainxpert.model.SportSession
 import com.example.trainxpert.ui.theme.TrainXpertTheme
 import com.example.trainxpert.viewmodels.LocalSportSessionViewModel
 import com.example.trainxpert.viewmodels.SportSessionViewModel
 import com.example.trainxpert.viewmodels.SportSessionViewModelFactory
-import data.AppDatabase
-import data.SportSessionDao
-import java.time.LocalDate
+import com.example.trainxpert.data.AppDatabase
 import java.time.LocalDateTime
 import java.util.Date
 
@@ -41,7 +32,9 @@ class MainActivity : ComponentActivity() {
         }
 
         viewModel.loadSessions()
-//        viewModel.addSession("Test_1", LocalDate.of(2023, 12, 5) , 10, 10.0,10)
+
+        viewModel.addSession("25/11/2024", LocalDateTime.of(2024, 11,10,10,10,10) , 10, 10.0,10)
+
         setContent {
             //passe LocalSportSessionViewModel a tous les composant fils
             CompositionLocalProvider(LocalSportSessionViewModel provides viewModel){

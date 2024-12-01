@@ -1,4 +1,4 @@
-package data
+package com.example.trainxpert.data
 
 import android.content.Context
 import androidx.room.Database
