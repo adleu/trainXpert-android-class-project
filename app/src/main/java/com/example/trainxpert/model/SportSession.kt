@@ -3,7 +3,6 @@ package com.example.trainxpert.model
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.time.LocalDateTime
-import java.util.Date
 
 @Entity(tableName = "sport_sessions")
 data class SportSession(

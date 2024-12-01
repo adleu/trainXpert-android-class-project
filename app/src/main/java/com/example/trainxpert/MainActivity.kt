@@ -33,7 +33,7 @@ class MainActivity : ComponentActivity() {
 
         viewModel.loadSessions()
 
-        viewModel.addSession("25/11/2024", LocalDateTime.of(2024, 11,10,10,10,10) , 10, 10.0,10)
+//        viewModel.addSession("25/11/2024", LocalDateTime.of(2024, 11,10,10,10,10) , 10, 10.0,10)
 
         setContent {
             //passe LocalSportSessionViewModel a tous les composant fils
