@@ -5,3 +5,5 @@ import androidx.compose.ui.unit.sp
 
 val MainPadding = 16.dp
 val TitleCardFontSize = 18.sp
+val HistoryCardFontSize = 15.sp
+val HistoryCardPadding = 5.dp
