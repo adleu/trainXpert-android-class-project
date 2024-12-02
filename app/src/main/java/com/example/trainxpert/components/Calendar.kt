@@ -1,17 +1,11 @@
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.BasicText
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.KeyboardArrowRight
-import androidx.compose.material.icons.outlined.ArrowForward
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -28,10 +22,10 @@ import com.example.trainxpert.ui.theme.CalendarArrowTint
 import com.example.trainxpert.ui.theme.CardTitle
 import com.example.trainxpert.ui.theme.MainPadding
 import com.example.trainxpert.ui.theme.TitleCardFontSize
-import java.io.InputStreamReader
+import com.example.trainxpert.viewmodels.LocalSportSessionViewModel
+import java.time.DayOfWeek
 import java.time.LocalDate
-import java.time.format.DateTimeFormatter
-import kotlin.random.Random
+
 
 // Définition du modèle de données pour les sessions de sport
 data class SportSessions(val sessions: List<String>)
@@ -39,13 +33,6 @@ data class SportSessions(val sessions: List<String>)
 
 @Composable
 fun SportCalendarScreen() {
-//    val context = LocalContext.current
-
-    // Charger le JSON des sessions sportives
-//    val sportSessions = remember {
-//        loadSportSessionsFromJson(context)
-//    }
-
     var currentDate by remember { mutableStateOf(LocalDate.now()) }
     Card(
         modifier = Modifier
@@ -69,7 +56,7 @@ fun SportCalendarScreen() {
                     .align(Alignment.Start)
             )
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(8.dp))
 
             Row(
                 modifier = Modifier
@@ -101,6 +88,9 @@ fun SportCalendarScreen() {
 
 @Composable
 fun CalendarView(currentDate: LocalDate) {
+    val viewModel = LocalSportSessionViewModel.current
+    val sessions by viewModel.sessions.collectAsState(initial = emptyList())
+
     val daysInMonth = currentDate.lengthOfMonth()
 
     // Afficher les jours du mois
@@ -109,14 +99,17 @@ fun CalendarView(currentDate: LocalDate) {
             .background(Color.White)
             .fillMaxWidth()
     ) {
-        CalendarDayNames()
+        CalendarDayNames(getFirstDayOfWeekIndex(currentDate.year.toInt(),currentDate.monthValue))
         for (week in 0 until daysInMonth / 7 + 1) {
             Row {
                 for (dayOfWeek in 0 until 7) {
                     val day = (week * 7) + dayOfWeek + 1
                     if (day <= daysInMonth) {
 //                        val isSportDay = sportSessions.sessions.contains(currentDate.withDayOfMonth(day).toString())
-                          val isSportDay = Random.nextInt(1, 10) == 1
+                        val isSportDay = sessions.any { session ->
+                            session.dateTime.toLocalDate() == currentDate.withDayOfMonth(day)
+                        }
+//                        val isSportDay = Random.nextInt(1, 10) == 1
                         CalendarDay(day, isSportDay,currentDate == LocalDate.now())
                     }
                 }
@@ -126,10 +119,11 @@ fun CalendarView(currentDate: LocalDate) {
 }
 
 @Composable
-fun CalendarDayNames(){
+fun CalendarDayNames(startDayIndex : Int){
     val weekDays = listOf("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")
+    val shiftedWeekDays = weekDays.drop(startDayIndex) + weekDays.take(startDayIndex)
     Row {
-        weekDays.forEach { jour ->
+        shiftedWeekDays.forEach { jour ->
             Box(
                 modifier = Modifier
                     .padding(4.dp)
@@ -164,13 +158,24 @@ fun CalendarDay(day: Int, isSportDay: Boolean, isCurrentDateNow : Boolean) {
     }
 }
 
-// Charger les sessions sportives depuis le fichier JSON
-//fun loadSportSessionsFromJson(context: Context): SportSessions {
-//    val inputStream = context.assets.open("sport_sessions.json")
-//    val reader = InputStreamReader(inputStream)
-//    val sportSessionsType = object : TypeToken<SportSessions>() {}.type
-//    return Gson().fromJson(reader, sportSessionsType)
-//}
+fun getFirstDayOfWeekIndex(year: Int, month: Int): Int {
+    // Obtenir le premier jour du mois
+    val firstDayOfMonth = LocalDate.of(year, month, 1)
+
+    // Récupérer le jour de la semaine (LUNDI, MARDI, etc.)
+    val dayOfWeek = firstDayOfMonth.dayOfWeek
+
+    // Convertir le jour en index correspondant à ta liste
+    return when (dayOfWeek) {
+        DayOfWeek.MONDAY -> 0
+        DayOfWeek.TUESDAY -> 1
+        DayOfWeek.WEDNESDAY -> 2
+        DayOfWeek.THURSDAY -> 3
+        DayOfWeek.FRIDAY -> 4
+        DayOfWeek.SATURDAY -> 5
+        DayOfWeek.SUNDAY -> 6
+    }
+}
 
 @Preview(showBackground = false)
 @Composable
