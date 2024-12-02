@@ -25,12 +25,13 @@ fun ActivityCard(title: String, subtitle: String, imageResId: Int, modifier: Mod
             .height(200.dp), // Hauteur de la carte
         shape = RoundedCornerShape(8.dp),
         colors = CardDefaults.cardColors(
-            containerColor = Color.LightGray
+            containerColor = Color.White
         )
     ) {
         Column(
             modifier = Modifier.padding(8.dp),
             verticalArrangement = Arrangement.Center
+
         ) {
             // Affichage de l'image
             Image(
