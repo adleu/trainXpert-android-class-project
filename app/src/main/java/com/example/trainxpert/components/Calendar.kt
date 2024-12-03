@@ -16,6 +16,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.trainxpert.components.HistoryCard
+import com.example.trainxpert.navigation.NavigationHistoryComponent
 import com.example.trainxpert.ui.theme.BackgroundCalendarCurrentDay
 import com.example.trainxpert.ui.theme.BackgroundCalendarDateSport
 import com.example.trainxpert.ui.theme.CalendarArrowTint
@@ -27,7 +29,6 @@ import java.time.DayOfWeek
 import java.time.LocalDate
 
 
-// Définition du modèle de données pour les sessions de sport
 data class SportSessions(val sessions: List<String>)
 
 
@@ -124,15 +125,17 @@ fun CalendarDayNames(startDayIndex : Int){
     val shiftedWeekDays = weekDays.drop(startDayIndex) + weekDays.take(startDayIndex)
     Row {
         shiftedWeekDays.forEach { jour ->
-            Box(
-                modifier = Modifier
-                    .padding(4.dp)
-                    .size(40.dp)
-                    .background(Color.White)
-                    .wrapContentSize(Alignment.Center)
-            ) {
-                Text(text = jour, color = Color.Gray)
-            }
+                Box(
+                    modifier = Modifier
+                        .padding(4.dp)
+                        .size(40.dp)
+                        .background(Color.White)
+                        .wrapContentSize(Alignment.Center)
+                ) {
+                    Text(text = jour, color = Color.Gray)
+                }
+
+
         }
     }
 }
@@ -159,13 +162,10 @@ fun CalendarDay(day: Int, isSportDay: Boolean, isCurrentDateNow : Boolean) {
 }
 
 fun getFirstDayOfWeekIndex(year: Int, month: Int): Int {
-    // Obtenir le premier jour du mois
     val firstDayOfMonth = LocalDate.of(year, month, 1)
 
-    // Récupérer le jour de la semaine (LUNDI, MARDI, etc.)
     val dayOfWeek = firstDayOfMonth.dayOfWeek
 
-    // Convertir le jour en index correspondant à ta liste
     return when (dayOfWeek) {
         DayOfWeek.MONDAY -> 0
         DayOfWeek.TUESDAY -> 1

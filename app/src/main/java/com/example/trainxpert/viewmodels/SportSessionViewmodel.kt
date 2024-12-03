@@ -75,9 +75,6 @@ class SportSessionViewModel(private val dao: SportSessionDao) : ViewModel() {
     }
 }
 
-
-
-
 class SportSessionViewModelFactory(private val dao: SportSessionDao) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(SportSessionViewModel::class.java)) {
