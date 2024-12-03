@@ -28,6 +28,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import com.example.trainxpert.navigation.NavigationHistoryComponent
+import com.example.trainxpert.navigation.NavigationHomeComponent
 import com.example.trainxpert.screens.ActivityScreen
 import com.example.trainxpert.screens.HistoryScreen
 import com.example.trainxpert.screens.HomeScreen
@@ -87,11 +88,11 @@ fun BottomBar() {
     ) { scaffoldPadding ->
         Crossfade(
             targetState = selectedTab,
-            animationSpec = tween(500),
+            animationSpec = tween(0),
             label = "Crossfade selected tab",
         ) { tabIndex ->
             when(tabIndex) {
-                0 -> HomeScreen(modifier = Modifier.padding(scaffoldPadding))
+                0 -> NavigationHomeComponent(modifier = Modifier.padding(scaffoldPadding))
                 1 -> ActivityScreen(modifier = Modifier.padding(scaffoldPadding))
                 2 -> NavigationHistoryComponent(modifier = Modifier.padding(scaffoldPadding))
             }

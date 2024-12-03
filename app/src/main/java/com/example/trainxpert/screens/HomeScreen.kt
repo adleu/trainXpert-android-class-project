@@ -19,10 +19,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.trainxpert.R
 import com.example.trainxpert.components.DailyTipCard
+import com.example.trainxpert.model.SportSession
 
 
 @Composable
-fun HomeScreen(modifier: Modifier){
+fun HomeScreen(modifier: Modifier,onDetails: ((SportSession) -> Unit)){
 
     Column(
         modifier = modifier
@@ -58,7 +59,7 @@ fun HomeScreen(modifier: Modifier){
 
         DailyTipCard()
 
-        SportCalendarScreen()
+        SportCalendarScreen(onDetails)
     }
 
 }

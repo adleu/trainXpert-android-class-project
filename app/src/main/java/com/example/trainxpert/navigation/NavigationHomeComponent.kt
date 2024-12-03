@@ -1,5 +1,6 @@
 package com.example.trainxpert.navigation
 
+
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
@@ -10,28 +11,29 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.trainxpert.screens.HistoryDetailScreen
 import com.example.trainxpert.screens.HistoryScreen
+import com.example.trainxpert.screens.HomeScreen
 import com.example.trainxpert.viewmodels.LocalSportSessionViewModel
 
 @Composable
-fun NavigationHistoryComponent(modifier: Modifier) {
+fun NavigationHomeComponent(modifier: Modifier) {
     val navController = rememberNavController()
     val viewModel = LocalSportSessionViewModel.current
 
     NavHost(
         navController = navController,
-        startDestination = ScreensHistory.HistoryScreen.name
+        startDestination = ScreensHome.HomeScreen.name
     ) {
-        composable(ScreensHistory.HistoryScreen.name) {
-            HistoryScreen(
+        composable(ScreensHome.HomeScreen.name) {
+            HomeScreen(
                 modifier = modifier,
                 onDetails = { session ->
-                    navController.navigate("${ScreensHistory.HistoryDetailScreen.name}/${session.id}")
+                    navController.navigate("${ScreensHome.HistoryDetailScreen.name}/${session.id}")
                 }
             )
         }
 
         composable(
-            route = "${ScreensHistory.HistoryDetailScreen.name}/{sessionId}",
+            route = "${ScreensHome.HistoryDetailScreen.name}/{sessionId}",
             arguments = listOf(navArgument("sessionId") { type = NavType.StringType })
         ) { backStackEntry ->
             val sessionId = backStackEntry.arguments?.getString("sessionId")
