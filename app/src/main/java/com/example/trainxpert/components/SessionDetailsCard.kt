@@ -1,7 +1,9 @@
 package com.example.trainxpert.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,17 +13,23 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.sharp.Delete
 import androidx.compose.material3.Card
+import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.trainxpert.model.SportSession
 import com.example.trainxpert.navigation.NavigationHistoryComponent
 import com.example.trainxpert.screens.HistoryDetailScreen
@@ -34,7 +42,7 @@ import java.time.format.TextStyle
 import java.util.Locale
 
 @Composable
-fun SessionDetailsCard(session : SportSession){
+fun SessionDetailsCard(navController: NavController, session: SportSession) {
     val viewModel = LocalSportSessionViewModel.current
 
     Card(
@@ -50,17 +58,42 @@ fun SessionDetailsCard(session : SportSession){
             modifier = Modifier
                 .background(Color.White)
                 .padding(MainPadding)
-        ){
-            Text(
-                text = session.dateTime.dayOfMonth.toString() +
-                        " ${session.dateTime.month.getDisplayName(TextStyle.FULL, Locale.FRENCH)
-                            .replaceFirstChar { it.uppercase() }}" +
-                        " ${session.dateTime.year}",
-                fontSize = 25.sp,
-                fontWeight = FontWeight.Bold,
-                color = CardTitle,
-//                modifier = Modifier.fillMaxWidth().fillMaxHeight()
-            )
+                .fillMaxWidth()
+                .fillMaxHeight()
+        ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ){
+                Text(
+                    text = session.dateTime.dayOfMonth.toString() +
+                            " ${
+                                session.dateTime.month.getDisplayName(TextStyle.FULL, Locale.FRENCH)
+                                    .replaceFirstChar { it.uppercase() }
+                            }" +
+                            " ${session.dateTime.year}",
+                    fontSize = 25.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = CardTitle,
+                    modifier = Modifier.padding(top = 10.dp)
+                )
+
+                IconButton(onClick = {
+
+                    viewModel.deleteSession(session)
+                    navController.popBackStack()
+//                NavigationHistoryComponent(Modifier)
+
+                }) {
+                    Icon(
+                        imageVector = Icons.Sharp.Delete,
+                        contentDescription = "Delete",
+//                        modifier = Modifier.weight(1f)
+                    )
+                }
+            }
+
 
             Spacer(modifier = Modifier.height(50.dp))
 
@@ -82,7 +115,7 @@ fun SessionDetailsCard(session : SportSession){
 //                modifier = Modifier.fillMaxWidth().fillMaxHeight()
             )
 
-            session.caloriesBurned?.let{
+            session.caloriesBurned?.let {
                 Spacer(modifier = Modifier.height(20.dp))
 
                 Text(
@@ -96,21 +129,16 @@ fun SessionDetailsCard(session : SportSession){
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            session.distanceInKm?.let{
+            session.distanceInKm?.let {
                 Text(
                     text = session.distanceInKm.toString() + " km",
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Normal,
                     color = Color.Black,
-                    modifier = Modifier.fillMaxWidth().fillMaxHeight()
+                    modifier = Modifier
+//                        .fillMaxWidth()
+//                        .fillMaxHeight()
                 )
-            }
-
-            IconButton(onClick = {
-                viewModel.deleteSession(session)
-//                NavigationHistoryComponent(Modifier)
-            }) {
-                Icons.Filled.Delete
             }
         }
 

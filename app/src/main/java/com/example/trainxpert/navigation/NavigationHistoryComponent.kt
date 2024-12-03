@@ -49,7 +49,7 @@ fun NavigationHistoryComponent(modifier: Modifier) {
                     if (historyNavController.previousBackStackEntry != null) {
                         historyNavController.popBackStack()
                     }
-                },session = session)
+                },session = session, navController = historyNavController)
             }
         }
     }

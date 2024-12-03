@@ -33,6 +33,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.trainxpert.components.SessionDetailsCard
 import com.example.trainxpert.model.SportSession
 import com.example.trainxpert.ui.theme.MainGreyBackground
@@ -41,7 +42,7 @@ import com.example.trainxpert.viewmodels.LocalSportSessionViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HistoryDetailScreen(backAction: () -> Unit, session: SportSession?) {
+fun HistoryDetailScreen(backAction: () -> Unit, session: SportSession?, navController: NavController) {
     Scaffold(
         topBar = {
             TopAppBar(
@@ -108,7 +109,7 @@ fun HistoryDetailScreen(backAction: () -> Unit, session: SportSession?) {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 session?.let {
-                    SessionDetailsCard(session)
+                    SessionDetailsCard(session = session, navController = navController)
                 }
             }
         }
