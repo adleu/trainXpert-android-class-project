@@ -1,6 +1,5 @@
 package com.example.trainxpert.screens
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -19,17 +18,17 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.trainxpert.R
 import com.example.trainxpert.components.HistoryCard
+import com.example.trainxpert.model.SportSession
 import com.example.trainxpert.viewmodels.LocalSportSessionViewModel
+import ufr.mim.netfloux.components.RawButton
 
 @Composable
-fun HistoryScreen(modifier: Modifier) {
+fun HistoryScreen(modifier: Modifier, onDetails: ((SportSession) -> Unit)) {
 
     val viewModel = LocalSportSessionViewModel.current
     val sessions by viewModel.sessions.collectAsState(initial = emptyList())
@@ -73,10 +72,12 @@ fun HistoryScreen(modifier: Modifier) {
                 .padding(16.dp)
         ) {
             items(sessions) { session ->
-                HistoryCard(session)
+                RawButton(onClick = {
+                    onDetails(session)
+                }){
+                    HistoryCard(session)
+                }
             }
         }
-
-
     }
 }

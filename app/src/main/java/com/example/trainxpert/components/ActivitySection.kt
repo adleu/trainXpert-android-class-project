@@ -6,7 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.trainxpert.models.ActivityItem
+import com.example.trainxpert.model.ActivityItem
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
@@ -14,7 +14,12 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.ui.graphics.Color
 
 @Composable
-fun ActivitySection(title: String, activities: List<ActivityItem>, modifier: Modifier = Modifier) {
+fun ActivitySection(
+    title: String,
+    activities: List<ActivityItem>,
+    onActivityClick: (ActivityItem) -> Unit, // Gestionnaire de clic ajouté
+    modifier: Modifier = Modifier
+) {
     Card(
         modifier = modifier
             .fillMaxWidth()
@@ -47,7 +52,8 @@ fun ActivitySection(title: String, activities: List<ActivityItem>, modifier: Mod
                     ActivityCard(
                         title = activity.title,
                         subtitle = activity.subtitle,
-                        imageResId = activity.imageResId
+                        imageResId = activity.imageResId,
+                        onClick = { onActivityClick(activity) } // Passer l'activité cliquée
                     )
                 }
             }

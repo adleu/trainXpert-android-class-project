@@ -1,6 +1,7 @@
 package com.example.trainxpert.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.layout.*
@@ -17,12 +18,19 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun ActivityCard(title: String, subtitle: String, imageResId: Int, modifier: Modifier = Modifier) {
+fun ActivityCard(
+    title: String,
+    subtitle: String,
+    imageResId: Int,
+    onClick: () -> Unit, // Gestionnaire de clic ajouté
+    modifier: Modifier = Modifier
+) {
     Card(
         modifier = modifier
             .padding(8.dp)
             .width(150.dp) // Largeur ajustée pour le défilement horizontal
-            .height(200.dp), // Hauteur de la carte
+            .height(200.dp) // Hauteur de la carte
+            .clickable { onClick() }, // Ajout du clic
         shape = RoundedCornerShape(8.dp),
         colors = CardDefaults.cardColors(
             containerColor = Color.White
@@ -31,7 +39,6 @@ fun ActivityCard(title: String, subtitle: String, imageResId: Int, modifier: Mod
         Column(
             modifier = Modifier.padding(8.dp),
             verticalArrangement = Arrangement.Center
-
         ) {
             // Affichage de l'image
             Image(
@@ -52,3 +59,4 @@ fun ActivityCard(title: String, subtitle: String, imageResId: Int, modifier: Mod
         }
     }
 }
+

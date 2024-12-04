@@ -16,6 +16,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.trainxpert.components.HistoryCard
+import com.example.trainxpert.model.SportSession
+import com.example.trainxpert.navigation.NavigationHistoryComponent
 import com.example.trainxpert.ui.theme.BackgroundCalendarCurrentDay
 import com.example.trainxpert.ui.theme.BackgroundCalendarDateSport
 import com.example.trainxpert.ui.theme.CalendarArrowTint
@@ -23,16 +26,16 @@ import com.example.trainxpert.ui.theme.CardTitle
 import com.example.trainxpert.ui.theme.MainPadding
 import com.example.trainxpert.ui.theme.TitleCardFontSize
 import com.example.trainxpert.viewmodels.LocalSportSessionViewModel
+import ufr.mim.netfloux.components.RawButton
 import java.time.DayOfWeek
 import java.time.LocalDate
 
 
-// Définition du modèle de données pour les sessions de sport
 data class SportSessions(val sessions: List<String>)
 
 
 @Composable
-fun SportCalendarScreen() {
+fun SportCalendarScreen(onDetails: ((SportSession) -> Unit)) {
     var currentDate by remember { mutableStateOf(LocalDate.now()) }
     Card(
         modifier = Modifier
@@ -81,13 +84,13 @@ fun SportCalendarScreen() {
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            CalendarView(currentDate)
+            CalendarView(currentDate, onDetails)
         }
     }
 }
 
 @Composable
-fun CalendarView(currentDate: LocalDate) {
+fun CalendarView(currentDate: LocalDate, onDetails: ((SportSession) -> Unit)) {
     val viewModel = LocalSportSessionViewModel.current
     val sessions by viewModel.sessions.collectAsState(initial = emptyList())
 
@@ -109,8 +112,18 @@ fun CalendarView(currentDate: LocalDate) {
                         val isSportDay = sessions.any { session ->
                             session.dateTime.toLocalDate() == currentDate.withDayOfMonth(day)
                         }
+                        val sessionOfDay = if (isSportDay) {
+                            sessions.find { session ->
+                                session.dateTime.toLocalDate() == currentDate.withDayOfMonth(day)
+                            }
+                        } else {
+                            null
+                        }
+
+
 //                        val isSportDay = Random.nextInt(1, 10) == 1
-                        CalendarDay(day, isSportDay,currentDate == LocalDate.now())
+
+                        CalendarDay(day, isSportDay,currentDate == LocalDate.now(),session = sessionOfDay, onDetails = onDetails)
                     }
                 }
             }
@@ -124,27 +137,45 @@ fun CalendarDayNames(startDayIndex : Int){
     val shiftedWeekDays = weekDays.drop(startDayIndex) + weekDays.take(startDayIndex)
     Row {
         shiftedWeekDays.forEach { jour ->
-            Box(
-                modifier = Modifier
-                    .padding(4.dp)
-                    .size(40.dp)
-                    .background(Color.White)
-                    .wrapContentSize(Alignment.Center)
-            ) {
-                Text(text = jour, color = Color.Gray)
-            }
+                Box(
+                    modifier = Modifier
+                        .padding(4.dp)
+                        .size(40.dp)
+                        .background(Color.White)
+                        .wrapContentSize(Alignment.Center)
+                ) {
+                    Text(text = jour, color = Color.Gray)
+                }
+
+
         }
     }
 }
 
 @Composable
-fun CalendarDay(day: Int, isSportDay: Boolean, isCurrentDateNow : Boolean) {
+fun CalendarDay(day: Int, isSportDay: Boolean, isCurrentDateNow : Boolean,session : SportSession?= null, onDetails: ((SportSession) -> Unit)) {
     var color = if (isSportDay) BackgroundCalendarDateSport else Color.White
     var texColor = if (isSportDay or (isCurrentDateNow && day == LocalDate.now().dayOfMonth)) Color.White else Color.Black
     if (isCurrentDateNow && day == LocalDate.now().dayOfMonth){
         color = BackgroundCalendarCurrentDay
         texColor = Color.White
     }
+
+    if(session != null){
+        RawButton(onClick = {
+            onDetails(session)
+        }){
+            calendarBoxByDay(day, color, texColor)
+        }
+    }else{
+        calendarBoxByDay(day, color, texColor)
+    }
+
+
+}
+
+@Composable
+fun calendarBoxByDay(day : Int, color : Color, texColor: Color){
     Box(
         modifier = Modifier
             .padding(4.dp)
@@ -159,13 +190,10 @@ fun CalendarDay(day: Int, isSportDay: Boolean, isCurrentDateNow : Boolean) {
 }
 
 fun getFirstDayOfWeekIndex(year: Int, month: Int): Int {
-    // Obtenir le premier jour du mois
     val firstDayOfMonth = LocalDate.of(year, month, 1)
 
-    // Récupérer le jour de la semaine (LUNDI, MARDI, etc.)
     val dayOfWeek = firstDayOfMonth.dayOfWeek
 
-    // Convertir le jour en index correspondant à ta liste
     return when (dayOfWeek) {
         DayOfWeek.MONDAY -> 0
         DayOfWeek.TUESDAY -> 1
@@ -177,8 +205,8 @@ fun getFirstDayOfWeekIndex(year: Int, month: Int): Int {
     }
 }
 
-@Preview(showBackground = false)
-@Composable
-fun DefaultPreview() {
-    SportCalendarScreen()
-}
+//@Preview(showBackground = false)
+//@Composable
+//fun DefaultPreview() {
+//    SportCalendarScreen()
+//}
