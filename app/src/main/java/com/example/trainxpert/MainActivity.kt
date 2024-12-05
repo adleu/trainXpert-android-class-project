@@ -49,11 +49,6 @@ class MainActivity : ComponentActivity() {
             ActivityViewModelFactory(activityDao)
         }
 
-
-        viewModel.deleteAllSessions()
-        viewModel.addSession("golf", LocalDateTime.of(2024, 11,10,10,10,10) , 10, 10.0,10)
-        viewModel.addSession("volley", LocalDateTime.of(2024, 11,25,10,10,10) , 10, 10.0,10)
-        viewModel.addSession("amongus", LocalDateTime.of(2024, 12,1,10,10,10) , 10, 10.0,10)
         viewModel.loadSessions()
         lifecycleScope.launch {
             viewModel.deleteAllSessions()
