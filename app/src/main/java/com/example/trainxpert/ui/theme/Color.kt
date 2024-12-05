@@ -15,3 +15,4 @@ val BackgroundCalendarDateSport = Color(0xFF007AFF)
 val BackgroundCalendarCurrentDay = Color(0xFFFF5722)
 val CardTitle = Color(0xFF3F51B5)
 val CalendarArrowTint = Color.Gray
+val ButtonColor = Color(0xFF007AFF)

@@ -40,7 +40,6 @@ fun HistoryScreen(modifier: Modifier, onDetails: ((SportSession) -> Unit)) {
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        // Texte de bienvenue
         Row(
             modifier = Modifier
                 .fillMaxWidth()

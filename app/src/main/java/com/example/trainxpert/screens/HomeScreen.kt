@@ -66,8 +66,8 @@ fun HomeScreen(modifier: Modifier,onDetails: ((SportSession) -> Unit)){
         RawButton(onClick = {showTips = !showTips }) {
 
             when(showTips){
-                true -> StatCard()
-                false -> DailyTipCard()
+                true -> DailyTipCard()
+                false -> StatCard()
             }
         }
 
