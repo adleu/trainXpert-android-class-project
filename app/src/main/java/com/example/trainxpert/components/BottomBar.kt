@@ -27,6 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
+import com.example.trainxpert.navigation.NavigationActivityComponent
 import com.example.trainxpert.navigation.NavigationHistoryComponent
 import com.example.trainxpert.navigation.NavigationHomeComponent
 import com.example.trainxpert.screens.ActivityScreen
@@ -93,7 +94,9 @@ fun BottomBar() {
         ) { tabIndex ->
             when(tabIndex) {
                 0 -> NavigationHomeComponent(modifier = Modifier.padding(scaffoldPadding))
-                1 -> ActivityScreen(modifier = Modifier.padding(scaffoldPadding))
+               // 1 -> ActivityScreen(modifier = Modifier.padding(scaffoldPadding))
+                1 -> NavigationActivityComponent(modifier = Modifier.padding(scaffoldPadding))
+
                 2 -> NavigationHistoryComponent(modifier = Modifier.padding(scaffoldPadding))
             }
         }
