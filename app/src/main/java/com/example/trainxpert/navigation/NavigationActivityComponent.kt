@@ -10,10 +10,12 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.example.trainxpert.model.ActivityItem
 import com.example.trainxpert.navigation.ScreensActivity.AddActivityScreen
 import com.example.trainxpert.screens.ActivityDetailScreen
 import com.example.trainxpert.screens.ActivityScreen
 import com.example.trainxpert.screens.AddActivityScreen
+import com.example.trainxpert.R
 
 
 @Composable
@@ -41,6 +43,25 @@ fun NavigationActivityComponent(modifier: Modifier = Modifier) {
         // Écran pour ajouter une activité
         composable(ScreensActivity.AddActivityScreen.name) {
             AddActivityScreen(
+                activities = viewModel.activities.collectAsState(initial = emptyList()).value,
+                onCancel = {
+                    if (navController.previousBackStackEntry != null) {
+                        navController.popBackStack()
+                    }
+                },
+                onSave = { activityName, date, duration, distance, calories ->
+                    viewModel.addActivity(
+                        activity = ActivityItem(
+                            title = activityName,
+                            subtitle = "", // Ajoutez un sous-titre par défaut ou selon vos besoins
+                            imageResId = R.drawable.ic_launcher_foreground, // Placeholder pour l'image
+                            category = "Default", // Ajoutez une catégorie par défaut
+                            pratique = "Pratique par défaut",
+                            conseil = "Conseil par défaut"
+                        )
+                    )
+                    navController.popBackStack()
+                },
                 backAction = {
                     if (navController.previousBackStackEntry != null) {
                         navController.popBackStack()
@@ -48,6 +69,7 @@ fun NavigationActivityComponent(modifier: Modifier = Modifier) {
                 }
             )
         }
+
 
         // Écran de détails d'une activité
         composable(
