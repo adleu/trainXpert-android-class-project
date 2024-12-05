@@ -24,8 +24,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.LineHeightStyle
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -37,6 +40,7 @@ import com.example.trainxpert.ui.theme.BackgroundCalendarCurrentDay
 import com.example.trainxpert.ui.theme.CardTitle
 import com.example.trainxpert.ui.theme.HistoryCardFontSize
 import com.example.trainxpert.ui.theme.MainPadding
+import com.example.trainxpert.ui.theme.TitleCardFontSize
 import com.example.trainxpert.viewmodels.LocalSportSessionViewModel
 import java.time.format.TextStyle
 import java.util.Locale
@@ -49,8 +53,9 @@ fun SessionDetailsCard(navController: NavController, session: SportSession) {
         modifier = Modifier
 //            .background(Color.White,  shape = RoundedCornerShape(8.dp))
             .fillMaxWidth()
-            .fillMaxHeight()
-            .padding(MainPadding, MainPadding, MainPadding, bottom = 150.dp),
+//            .fillMaxHeight()
+//            .padding(MainPadding, MainPadding, MainPadding, bottom = 150.dp),
+            .padding(MainPadding),
         shape = RoundedCornerShape(8.dp),
     ) {
 
@@ -59,7 +64,7 @@ fun SessionDetailsCard(navController: NavController, session: SportSession) {
                 .background(Color.White)
                 .padding(MainPadding)
                 .fillMaxWidth()
-                .fillMaxHeight()
+//                .fillMaxHeight()
         ) {
             Row(
                 modifier = Modifier
@@ -75,7 +80,7 @@ fun SessionDetailsCard(navController: NavController, session: SportSession) {
                             " ${session.dateTime.year}",
                     fontSize = 25.sp,
                     fontWeight = FontWeight.Bold,
-                    color = CardTitle,
+                    color = Color.Black,
                     modifier = Modifier.padding(top = 10.dp)
                 )
 
@@ -92,7 +97,15 @@ fun SessionDetailsCard(navController: NavController, session: SportSession) {
 //                        modifier = Modifier.weight(1f)
                     )
                 }
+
             }
+            Text(
+                text = session.dateTime.hour.toString() + "h" + session.dateTime.minute.toString(),
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.Black,
+                modifier = Modifier.padding(top = 10.dp)
+            )
 
 
             Spacer(modifier = Modifier.height(50.dp))
@@ -105,39 +118,57 @@ fun SessionDetailsCard(navController: NavController, session: SportSession) {
 //                modifier = Modifier.fillMaxWidth().fillMaxHeight()
             )
 
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(10.dp))
 
             Text(
-                text = session.durationInMinutes.toString() + " minutes",
-                fontSize = 20.sp,
+                text = buildAnnotatedString {
+                    append("Votre session a duré ")
+                    withStyle(style = SpanStyle(fontWeight = FontWeight.Bold, color = CardTitle)) {
+                        append(session.durationInMinutes.toString() + " minutes")
+                    }
+                    append(".")
+                },
+                fontSize = 19.sp,
                 fontWeight = FontWeight.Normal,
                 color = Color.Black,
-//                modifier = Modifier.fillMaxWidth().fillMaxHeight()
+                modifier = Modifier.fillMaxWidth()
             )
 
             session.caloriesBurned?.let {
-                Spacer(modifier = Modifier.height(20.dp))
+                Spacer(modifier = Modifier.height(10.dp))
 
                 Text(
-                    text = session.caloriesBurned.toString() + " Kcal",
-                    fontSize = 20.sp,
+                    text = buildAnnotatedString {
+                        append("Vous avez brûlé ")
+                        withStyle(style = SpanStyle(fontWeight = FontWeight.Bold, color = CardTitle)) {
+                            append(session.caloriesBurned.toString() + " Kcal")
+                        }
+                        append(".")
+                    },
+                    fontSize = 19.sp,
                     fontWeight = FontWeight.Normal,
                     color = Color.Black,
+                    modifier = Modifier.fillMaxWidth()
                 )
             }
 
 
-            Spacer(modifier = Modifier.height(20.dp))
 
             session.distanceInKm?.let {
+                Spacer(modifier = Modifier.height(10.dp))
+
                 Text(
-                    text = session.distanceInKm.toString() + " km",
-                    fontSize = 20.sp,
+                    text = buildAnnotatedString {
+                        append("Vous avez parcouru ")
+                        withStyle(style = SpanStyle(fontWeight = FontWeight.Bold, color = CardTitle)) {
+                            append(session.distanceInKm.toString() + " Kcal")
+                        }
+                        append(".")
+                    },
+                    fontSize = 19.sp,
                     fontWeight = FontWeight.Normal,
                     color = Color.Black,
-                    modifier = Modifier
-//                        .fillMaxWidth()
-//                        .fillMaxHeight()
+                    modifier = Modifier.fillMaxWidth()
                 )
             }
         }
