@@ -10,6 +10,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -19,7 +23,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.trainxpert.R
 import com.example.trainxpert.components.DailyTipCard
+import com.example.trainxpert.components.StatCard
 import com.example.trainxpert.model.SportSession
+import ufr.mim.netfloux.components.RawButton
 
 
 @Composable
@@ -56,8 +62,14 @@ fun HomeScreen(modifier: Modifier,onDetails: ((SportSession) -> Unit)){
             )
         }
 
+        var showTips by remember { mutableStateOf(true) }
+        RawButton(onClick = {showTips = !showTips }) {
 
-        DailyTipCard()
+            when(showTips){
+                true -> StatCard()
+                false -> DailyTipCard()
+            }
+        }
 
         SportCalendarScreen(onDetails)
     }
