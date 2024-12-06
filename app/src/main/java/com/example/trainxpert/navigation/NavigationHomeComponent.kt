@@ -46,6 +46,7 @@ fun NavigationHomeComponent(modifier: Modifier) {
                         navController.popBackStack()
                     }
                 },session = session, navController = navController)
+
             }
         }
     }
