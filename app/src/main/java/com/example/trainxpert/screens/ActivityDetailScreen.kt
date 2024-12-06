@@ -45,6 +45,7 @@ import androidx.compose.ui.unit.sp
 import com.example.trainxpert.components.HistoryCard
 import com.example.trainxpert.model.ActivityItem
 import com.example.trainxpert.model.SportSession
+import com.example.trainxpert.ui.theme.CardTitle
 import com.example.trainxpert.ui.theme.MainGreyBackground
 import com.example.trainxpert.viewmodels.LocalSportSessionViewModel
 import ufr.mim.netfloux.components.RawButton
@@ -133,7 +134,9 @@ fun ActivityDetailScreen(
                             style = TextStyle(
                                 fontWeight = FontWeight.SemiBold,
                                 fontSize = 18.sp,
-                                color = Color(0xFF6200EE) // Couleur personnalisée
+                                //color = Color(0xFF6200EE)
+                                // Couleur personnalisée
+                                color = CardTitle
                             )
                         )
                         Spacer(modifier = Modifier.height(8.dp))
@@ -150,7 +153,7 @@ fun ActivityDetailScreen(
                             style = TextStyle(
                                 fontWeight = FontWeight.SemiBold,
                                 fontSize = 18.sp,
-                                color = Color(0xFF6200EE) // Couleur personnalisée
+                                color = CardTitle // Couleur personnalisée
                             )
                         )
                         Spacer(modifier = Modifier.height(8.dp))
