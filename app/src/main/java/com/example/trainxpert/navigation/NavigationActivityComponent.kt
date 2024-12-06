@@ -4,6 +4,7 @@ package com.example.trainxpert.navigation
 import LocalActivityViewModel
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -16,12 +17,15 @@ import com.example.trainxpert.screens.ActivityDetailScreen
 import com.example.trainxpert.screens.ActivityScreen
 import com.example.trainxpert.screens.AddActivityScreen
 import com.example.trainxpert.R
+import com.example.trainxpert.viewmodels.LocalSportSessionViewModel
 
 
 @Composable
 fun NavigationActivityComponent(modifier: Modifier = Modifier) {
     val navController = rememberNavController()
     val viewModel = LocalActivityViewModel.current
+    val viewModelSession = LocalSportSessionViewModel.current
+//    val sessions by viewModel.sessions.collectAsState(initial = emptyList())
 
     NavHost(
         navController = navController,
@@ -50,15 +54,8 @@ fun NavigationActivityComponent(modifier: Modifier = Modifier) {
                     }
                 },
                 onSave = { activityName, date, duration, distance, calories ->
-                    viewModel.addActivity(
-                        activity = ActivityItem(
-                            title = activityName,
-                            subtitle = "", // Ajoutez un sous-titre par défaut ou selon vos besoins
-                            imageResId = R.drawable.ic_launcher_foreground, // Placeholder pour l'image
-                            category = "Default", // Ajoutez une catégorie par défaut
-                            pratique = "Pratique par défaut",
-                            conseil = "Conseil par défaut"
-                        )
+                    viewModelSession.addSession(
+                        activityName, date, duration, distance, calories
                     )
                     navController.popBackStack()
                 },
