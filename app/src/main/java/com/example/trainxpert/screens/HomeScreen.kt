@@ -70,7 +70,6 @@ fun HomeScreen(modifier: Modifier,onDetails: ((SportSession) -> Unit)){
                 false -> StatCard()
             }
         }
-
         SportCalendarScreen(onDetails)
     }
 

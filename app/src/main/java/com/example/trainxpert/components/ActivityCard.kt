@@ -16,6 +16,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.trainxpert.ui.theme.MainPadding
 
 @Composable
 fun ActivityCard(
@@ -26,15 +27,10 @@ fun ActivityCard(
     modifier: Modifier = Modifier
 ) {
     Card(
-        modifier = modifier
-            .padding(8.dp)
-            .width(150.dp) // Largeur ajustée pour le défilement horizontal
-            .height(200.dp) // Hauteur de la carte
-            .clickable { onClick() }, // Ajout du clic
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(MainPadding),
         shape = RoundedCornerShape(8.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = Color.White
-        )
     ) {
         Column(
             modifier = Modifier.padding(8.dp),

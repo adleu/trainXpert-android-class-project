@@ -20,6 +20,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.trainxpert.model.ActivityItem
+import com.example.trainxpert.ui.theme.ButtonColor
+import com.example.trainxpert.ui.theme.CardTitle
 import java.time.LocalDateTime
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -27,8 +29,8 @@ import java.time.LocalDateTime
 fun AddActivityScreen(
     activities: List<ActivityItem>,
     onCancel: () -> Unit,
-   onSave: (String, LocalDateTime, Int, Double?, Int?) -> Unit,
-    backAction : () -> Unit
+    onSave: (String, LocalDateTime, Int, Double?, Int?) -> Unit,
+    backAction: () -> Unit
 ) {
     var selectedActivity by remember { mutableStateOf<ActivityItem?>(null) }
     var date by remember { mutableStateOf("") }
@@ -160,21 +162,27 @@ fun AddActivityScreen(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
-                Button(onClick = onCancel, colors = ButtonDefaults.buttonColors(containerColor = Color.Red)) {
+                Button(
+                    onClick = onCancel,
+                    colors = ButtonColors(ButtonColor, Color.White, CardTitle, CardTitle)
+                ) {
                     Text("Annuler", color = Color.White)
                 }
-                Button(onClick = {
-                    if (selectedActivity != null && date.isNotBlank() && time.isNotBlank()) {
-                        val localDateTime = LocalDateTime.parse("$date $time".replace(" ", "T"))
-                        onSave(
-                            selectedActivity!!.title,
-                            localDateTime,
-                            duration.toIntOrNull() ?: 0,
-                            distance.toDoubleOrNull(),
-                            calories.toIntOrNull()
-                        )
-                    }
-                }) {
+                Button(
+                    onClick = {
+                        if (selectedActivity != null && date.isNotBlank() && time.isNotBlank()) {
+                            val localDateTime = LocalDateTime.parse("$date $time".replace(" ", "T"))
+                            onSave(
+                                selectedActivity!!.title,
+                                localDateTime,
+                                duration.toIntOrNull() ?: 0,
+                                distance.toDoubleOrNull(),
+                                calories.toIntOrNull()
+                            )
+                        }
+                    },
+                    colors = ButtonColors(ButtonColor, Color.White, CardTitle, CardTitle)
+                ) {
                     Text("Enregistrer", color = Color.White)
                 }
             }

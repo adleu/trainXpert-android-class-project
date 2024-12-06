@@ -12,6 +12,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.ui.graphics.Color
+import com.example.trainxpert.ui.theme.MainPadding
 
 @Composable
 fun ActivitySection(
@@ -23,13 +24,10 @@ fun ActivitySection(
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .padding(8.dp), // Padding autour de la section
-        shape = RoundedCornerShape(4.dp), // Coins arrondis
+            .padding(MainPadding),
+        shape = RoundedCornerShape(8.dp),
         colors = CardDefaults.cardColors(
-            containerColor = Color.White // Fond blanc
-        ),
-        elevation = CardDefaults.cardElevation(
-            defaultElevation = 4.dp // Optionnel : ajouter une ombre
+            containerColor = Color.White
         )
     ) {
         Column(
