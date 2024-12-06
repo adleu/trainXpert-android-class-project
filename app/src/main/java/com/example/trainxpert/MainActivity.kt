@@ -57,7 +57,7 @@ class MainActivity : ComponentActivity() {
             viewModel.addSession("amongus", LocalDateTime.of(2024, 12,1,10,10,10) , 10, 10.0,10)
             viewModel.loadSessions()
 
-
+            activityViewModel.deleteAllActivities()
             activityViewModel.addActivity(
                 com.example.trainxpert.model.ActivityItem(
                     title = "Football",
