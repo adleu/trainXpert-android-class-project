@@ -18,6 +18,7 @@ import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -42,77 +43,75 @@ import com.example.trainxpert.ui.theme.CardTitle
 @Composable
 fun ActivityScreen(
     modifier: Modifier = Modifier,
-   // viewModel: ActivityViewModel,
-   onNavigateToDetails: (ActivityItem) -> Unit,
+    onNavigateToDetails: (ActivityItem) -> Unit,
     onNavigateToAdd: () -> Unit
 ) {
     val viewModel = LocalActivityViewModel.current
-    // Charger les activités par catégorie à partir du ViewModel
     val activitiesByCategory by viewModel.activitiesByCategory.collectAsState()
 
-    // Charger les données une seule fois lorsque le composable est affiché
     LaunchedEffect(Unit) {
         viewModel.loadActivities()
     }
 
-    // Présentation de l'écran
     Column(
         modifier = modifier
-            .fillMaxWidth()
-            .padding(16.dp),
-        verticalArrangement = Arrangement.Top,
-        horizontalAlignment = Alignment.CenterHorizontally
+            .fillMaxSize()
+            .padding(16.dp)
     ) {
-        Row(
+        LazyColumn(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 32.dp, end = 16.dp),
-            horizontalArrangement = Arrangement.Center
+                .weight(1f)
+                .fillMaxWidth(),
+            verticalArrangement = Arrangement.Top,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-//            Icons.Filled.DateRange
-            Icon(
-                imageVector = Icons.Filled.Person,
-                contentDescription = Icons.Filled.Person.name,
-                modifier = Modifier.size(48.dp),
-            )
+            item {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 32.dp, end = 16.dp),
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.Person,
+                        contentDescription = Icons.Filled.Person.name,
+                        modifier = Modifier.size(48.dp),
+                    )
+                    Text(
+                        text = " Activité",
+                        style = TextStyle(
+                            fontWeight = FontWeight.SemiBold,
+                            fontSize = 22.sp,
+                        ),
+                        modifier = Modifier.align(Alignment.CenterVertically)
+                    )
+                }
+            }
 
 
-            Text(
-                text = " Activité",
-                style = TextStyle(
-                    fontWeight = FontWeight.SemiBold,
-                    fontSize = 22.sp,
-                ),
-                modifier = Modifier.align(Alignment.CenterVertically)
 
-            )
-        }
 
-        // Bouton pour ajouter une activité
-        Button(
-            onClick = onNavigateToAdd,
-            modifier = Modifier.fillMaxWidth(),
-            colors = ButtonColors(ButtonColor, Color.White, CardTitle, CardTitle)
-        ) {
-            Text("Ajouter une activité", fontSize = ButtonTextSize)
+
+            items(activitiesByCategory.entries.toList()) { entry ->
+                val (category, activities) = entry
+                ActivitySection(
+                    title = category,
+                    activities = activities,
+                    onActivityClick = onNavigateToDetails
+                )
+            }
+
+
         }
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Liste des catégories et des activités
-        LazyColumn(
-            modifier = Modifier.fillMaxSize()
+        Button(
+            onClick = onNavigateToAdd,
+            modifier = Modifier.fillMaxWidth(),
+            colors = ButtonDefaults.buttonColors(containerColor = ButtonColor)
         ) {
-            activitiesByCategory.forEach { (category, activities) ->
-                item {
-                    ActivitySection(
-                        title = category,
-                        activities = activities,
-                        onActivityClick = onNavigateToDetails // Passe la gestion du clic
-                    )
-                }
-            }
+            Text("Ajouter une activité", fontSize = ButtonTextSize)
         }
-
     }
 }
