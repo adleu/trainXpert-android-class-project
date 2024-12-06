@@ -29,7 +29,8 @@ fun ActivityCard(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(MainPadding),
+            .padding(MainPadding)
+            .clickable { onClick() },
         shape = RoundedCornerShape(8.dp),
     ) {
         Column(
