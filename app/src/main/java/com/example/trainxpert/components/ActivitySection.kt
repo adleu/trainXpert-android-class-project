@@ -12,6 +12,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.ui.graphics.Color
+import com.example.trainxpert.ui.theme.CardTitle
 import com.example.trainxpert.ui.theme.MainPadding
 
 @Composable
@@ -37,7 +38,7 @@ fun ActivitySection(
             Text(
                 text = title,
                 fontSize = 20.sp,
-                color = Color.Black, // Couleur du texte
+                color = CardTitle, // Couleur du texte
                 modifier = Modifier.padding(bottom = 8.dp)
             )
 

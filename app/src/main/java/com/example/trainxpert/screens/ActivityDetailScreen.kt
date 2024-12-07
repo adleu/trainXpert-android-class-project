@@ -1,5 +1,6 @@
 package com.example.trainxpert.screens
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -44,6 +45,7 @@ import androidx.compose.ui.unit.sp
 import com.example.trainxpert.components.HistoryCard
 import com.example.trainxpert.model.ActivityItem
 import com.example.trainxpert.model.SportSession
+import com.example.trainxpert.ui.theme.CardTitle
 import com.example.trainxpert.ui.theme.MainGreyBackground
 import com.example.trainxpert.viewmodels.LocalSportSessionViewModel
 import ufr.mim.netfloux.components.RawButton
@@ -94,15 +96,12 @@ fun ActivityDetailScreen(
                 }
             )
         },
-    ) { innerPadding ->
-        Surface(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(innerPadding)
-                .padding(16.dp)
-        ) {
+        content = { innerPadding ->
             Column(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(innerPadding)
+                    .padding(horizontal = 16.dp),
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
@@ -113,8 +112,7 @@ fun ActivityDetailScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(200.dp)
-                        .clip(RoundedCornerShape(8.dp))
-                        .padding(16.dp),
+                        .clip(RoundedCornerShape(8.dp)),
                     contentScale = ContentScale.Crop
                 )
 
@@ -136,7 +134,9 @@ fun ActivityDetailScreen(
                             style = TextStyle(
                                 fontWeight = FontWeight.SemiBold,
                                 fontSize = 18.sp,
-                                color = Color(0xFF6200EE) // Couleur personnalisée
+                                //color = Color(0xFF6200EE)
+                                // Couleur personnalisée
+                                color = CardTitle
                             )
                         )
                         Spacer(modifier = Modifier.height(8.dp))
@@ -153,7 +153,7 @@ fun ActivityDetailScreen(
                             style = TextStyle(
                                 fontWeight = FontWeight.SemiBold,
                                 fontSize = 18.sp,
-                                color = Color(0xFF6200EE) // Couleur personnalisée
+                                color = CardTitle // Couleur personnalisée
                             )
                         )
                         Spacer(modifier = Modifier.height(8.dp))
@@ -165,5 +165,5 @@ fun ActivityDetailScreen(
                 }
             }
         }
-    }
+    )
 }
