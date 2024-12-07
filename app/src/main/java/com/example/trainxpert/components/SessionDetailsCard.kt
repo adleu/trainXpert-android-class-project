@@ -1,5 +1,7 @@
 package com.example.trainxpert.components
 
+import android.app.AlertDialog
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -14,7 +16,9 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.sharp.Delete
+import androidx.compose.material.icons.sharp.Edit
 import androidx.compose.material3.Card
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -24,6 +28,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
@@ -45,9 +50,24 @@ import com.example.trainxpert.viewmodels.LocalSportSessionViewModel
 import java.time.format.TextStyle
 import java.util.Locale
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SessionDetailsCard(navController: NavController, session: SportSession) {
     val viewModel = LocalSportSessionViewModel.current
+    val context = LocalContext.current
+
+
+    val builder = AlertDialog.Builder(context)
+    builder.setTitle("Confirmation")
+    builder.setMessage("Vous allez supprimer cette session?")
+    builder.setPositiveButton("Supprimer") { dialog, which ->
+        viewModel.deleteSession(session)
+        navController.popBackStack()
+        Toast.makeText(context, "Session supprimée", Toast.LENGTH_SHORT).show()
+    }
+    builder.setNegativeButton("Annuler") { dialog, which ->
+    }
+    val dialog = builder.create()
 
     Card(
         modifier = Modifier
@@ -84,10 +104,24 @@ fun SessionDetailsCard(navController: NavController, session: SportSession) {
                     modifier = Modifier.padding(top = 10.dp)
                 )
 
-                IconButton(onClick = {
+//                IconButton(onClick = {
+//
+//                    viewModel.deleteSession(session)
+//                    navController.popBackStack()
+////                NavigationHistoryComponent(Modifier)
+//
+//                }) {
+//                    Icon(
+//                        imageVector = Icons.Sharp.Edit,
+//                        contentDescription = "Edit",
+////                        modifier = Modifier.weight(1f)
+//                    )
+//                }
 
-                    viewModel.deleteSession(session)
-                    navController.popBackStack()
+                IconButton(onClick = {
+                    dialog.show()
+//                    viewModel.deleteSession(session)
+//                    navController.popBackStack()
 //                NavigationHistoryComponent(Modifier)
 
                 }) {
