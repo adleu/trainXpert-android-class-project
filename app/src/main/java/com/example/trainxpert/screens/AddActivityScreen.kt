@@ -1,5 +1,6 @@
 package com.example.trainxpert.screens
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
@@ -19,9 +20,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.trainxpert.components.DateTimePickerField
 import com.example.trainxpert.model.ActivityItem
+import com.example.trainxpert.ui.theme.BottomBarHeight
 import com.example.trainxpert.ui.theme.ButtonColor
 import com.example.trainxpert.ui.theme.CardTitle
+import com.example.trainxpert.ui.theme.MainPadding
+import com.example.trainxpert.ui.theme.formBackground
 import java.time.LocalDateTime
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -33,8 +38,9 @@ fun AddActivityScreen(
     backAction: () -> Unit
 ) {
     var selectedActivity by remember { mutableStateOf<ActivityItem?>(null) }
-    var date by remember { mutableStateOf("") }
-    var time by remember { mutableStateOf("") }
+//    var date by remember { mutableStateOf("") }
+//    var time by remember { mutableStateOf("") }
+    var selectedDateTime by remember { mutableStateOf<LocalDateTime?>(LocalDateTime.now()) }
     var duration by remember { mutableStateOf("") }
     var distance by remember { mutableStateOf("") }
     var calories by remember { mutableStateOf("") }
@@ -55,133 +61,118 @@ fun AddActivityScreen(
             )
         }
     ) { innerPadding ->
-        Column(
+        Box(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
-                .padding(16.dp),
-            verticalArrangement = Arrangement.Top,
-            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            // Dropdown for activity selection
-            TextField(
-                value = selectedActivity?.title ?: "",
-                onValueChange = {},
-                readOnly = true,
-                label = { Text("Activité") },
-                trailingIcon = {
-                    IconButton(onClick = { dropdownExpanded = true }) {
-                        Icon(Icons.Default.ArrowDropDown, contentDescription = "Dropdown")
-                    }
-                },
-                modifier = Modifier.fillMaxWidth()
-            )
-
-            // Dropdown Menu
-            DropdownMenu(
-                expanded = dropdownExpanded,
-                onDismissRequest = { dropdownExpanded = false },
-                modifier = Modifier.fillMaxWidth()
+            // Contenu principal
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                activities.forEach { activity ->
-                    DropdownMenuItem(
-                        text = { Text(activity.title) },
-                        onClick = {
-                            selectedActivity = activity
-                            dropdownExpanded = false
+                // Activité sélectionnée
+                TextField(
+                    value = selectedActivity?.title ?: "",
+                    onValueChange = {},
+                    readOnly = true,
+                    label = { Text("Activité") },
+                    trailingIcon = {
+                        IconButton(onClick = { dropdownExpanded = true }) {
+                            Icon(Icons.Default.ArrowDropDown, contentDescription = "Dropdown")
                         }
-                    )
+                    },
+                    modifier = Modifier.fillMaxWidth()
+                )
+
+                DropdownMenu(
+                    expanded = dropdownExpanded,
+                    onDismissRequest = { dropdownExpanded = false },
+                    modifier = Modifier.fillMaxWidth().background(formBackground).align(Alignment.CenterHorizontally)
+                ) {
+                    activities.forEach { activity ->
+                        DropdownMenuItem(
+                            text = { Text(activity.title) },
+                            onClick = {
+                                selectedActivity = activity
+                                dropdownExpanded = false
+                            }
+                        )
+                    }
                 }
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                // DateTime Picker Field
+                DateTimePickerField(
+                    initialDateTime = LocalDateTime.now(),
+                    onDateTimeSelected = { selectedDateTime = it }
+                )
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                // Champs Durée, Distance, Calories
+                TextField(
+                    value = duration,
+                    onValueChange = { duration = it },
+                    label = { Text("Durée (min)") },
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                    modifier = Modifier.fillMaxWidth()
+                )
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                TextField(
+                    value = distance,
+                    onValueChange = { distance = it },
+                    label = { Text("Distance (km)") },
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                    modifier = Modifier.fillMaxWidth()
+                )
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                TextField(
+                    value = calories,
+                    onValueChange = { calories = it },
+                    label = { Text("Calories brûlées") },
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                    modifier = Modifier.fillMaxWidth()
+                )
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
-
-            // Date input
-            TextField(
-                value = date,
-                onValueChange = { date = it },
-                label = { Text("Date") },
-                placeholder = { Text("YYYY-MM-DD") },
-                trailingIcon = {
-                    Icon(imageVector = Icons.Default.DateRange, contentDescription = "Date Picker")
-                },
-                modifier = Modifier.fillMaxWidth()
-            )
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            // Time input
-            TextField(
-                value = time,
-                onValueChange = { time = it },
-                label = { Text("Heure") },
-                placeholder = { Text("HH:MM") },
-                trailingIcon = {
-                    Icon(imageVector = Icons.Default.DateRange, contentDescription = "Time Picker")
-                },
-                modifier = Modifier.fillMaxWidth()
-            )
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            // Duration input
-            TextField(
-                value = duration,
-                onValueChange = { duration = it },
-                label = { Text("Durée (min)") },
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                modifier = Modifier.fillMaxWidth()
-            )
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            // Distance input
-            TextField(
-                value = distance,
-                onValueChange = { distance = it },
-                label = { Text("Distance (km)") },
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                modifier = Modifier.fillMaxWidth()
-            )
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            // Calories input
-            TextField(
-                value = calories,
-                onValueChange = { calories = it },
-                label = { Text("Calories brûlées") },
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                modifier = Modifier.fillMaxWidth()
-            )
-
-            Spacer(modifier = Modifier.height(32.dp))
-
-            // Buttons
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceEvenly
+            // Boutons alignés en bas de l'écran
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.BottomCenter) // Aligne la colonne en bas du Box
+                    .padding(16.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                Button(
-                    onClick = onCancel,
-                    colors = ButtonColors(ButtonColor, Color.White, CardTitle, CardTitle)
-                ) {
-                    Text("Annuler", color = Color.White)
-                }
+//                Button(
+//                    onClick = onCancel,
+//                    colors = ButtonDefaults.buttonColors(containerColor = Color.Red),
+//                    modifier = Modifier.fillMaxWidth()
+//                ) {
+//                    Text("Annuler", color = Color.White)
+//                }
                 Button(
                     onClick = {
-                        if (selectedActivity != null && date.isNotBlank() && time.isNotBlank()) {
-                            val localDateTime = LocalDateTime.parse("$date $time".replace(" ", "T"))
+                        if (selectedActivity != null && selectedDateTime != null) {
                             onSave(
                                 selectedActivity!!.title,
-                                localDateTime,
+                                selectedDateTime!!,
                                 duration.toIntOrNull() ?: 0,
                                 distance.toDoubleOrNull(),
                                 calories.toIntOrNull()
                             )
                         }
                     },
-                    colors = ButtonColors(ButtonColor, Color.White, CardTitle, CardTitle)
+                    colors = ButtonDefaults.buttonColors(ButtonColor),
+                    modifier = Modifier.fillMaxWidth().padding(bottom = BottomBarHeight)
                 ) {
                     Text("Enregistrer", color = Color.White)
                 }

@@ -111,7 +111,7 @@ fun ActivityScreen(
             modifier = Modifier.fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(containerColor = ButtonColor)
         ) {
-            Text("Ajouter une activité", fontSize = ButtonTextSize)
+            Text("+ Ajouter une activité", fontSize = ButtonTextSize)
         }
     }
 }

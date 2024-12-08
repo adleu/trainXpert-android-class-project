@@ -10,3 +10,4 @@ val TitleCardFontSize = 18.sp
 val HistoryCardFontSize = 15.sp
 val HistoryCardPadding = 5.dp
 val ButtonTextSize = 18.sp
+val BottomBarHeight = 100.dp

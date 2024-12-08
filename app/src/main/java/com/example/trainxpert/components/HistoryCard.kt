@@ -108,21 +108,24 @@ fun HistoryCard(session : SportSession){
                 Row(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text(
-                        text = "Kcal : ",
-                        fontSize = HistoryCardFontSize,
-                        fontWeight = FontWeight.Bold,
-                        color = Color(0xFF000000),
-                        textAlign = TextAlign.End,
-                    )
-                    Text(
-                        text = session.caloriesBurned.toString(),
-                        fontSize = HistoryCardFontSize,
-                        fontWeight = FontWeight.Normal,
-                        color = Color(0xFF000000),
-                        textAlign = TextAlign.End,
-                        modifier = Modifier.padding(end = 30.dp)
-                    )
+                    session.caloriesBurned?.let{
+                        Text(
+                            text = "Kcal : ",
+                            fontSize = HistoryCardFontSize,
+                            fontWeight = FontWeight.Bold,
+                            color = Color(0xFF000000),
+                            textAlign = TextAlign.End,
+                        )
+                        Text(
+                            text = session.caloriesBurned.toString(),
+                            fontSize = HistoryCardFontSize,
+                            fontWeight = FontWeight.Normal,
+                            color = Color(0xFF000000),
+                            textAlign = TextAlign.End,
+                            modifier = Modifier.padding(end = 30.dp)
+                        )
+                }
+
                 }
             }
 
