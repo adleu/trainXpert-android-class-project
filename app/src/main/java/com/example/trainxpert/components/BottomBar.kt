@@ -33,6 +33,7 @@ import com.example.trainxpert.navigation.NavigationHomeComponent
 import com.example.trainxpert.screens.ActivityScreen
 import com.example.trainxpert.screens.HistoryScreen
 import com.example.trainxpert.screens.HomeScreen
+import com.example.trainxpert.ui.theme.BottomBarHeight
 import com.example.trainxpert.ui.theme.MainGreyBackground
 
 data class MyIcon(
@@ -63,7 +64,7 @@ fun BottomBar() {
 //        },
         bottomBar = {
             BottomAppBar(
-                modifier = Modifier.height(100.dp),
+                modifier = Modifier.height(BottomBarHeight),
                 containerColor = Color.White
             ) {
                 icons.forEach { icon ->
