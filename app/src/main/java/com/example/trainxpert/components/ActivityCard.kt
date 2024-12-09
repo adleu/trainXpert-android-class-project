@@ -1,6 +1,7 @@
 package com.example.trainxpert.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
@@ -30,11 +31,12 @@ fun ActivityCard(
         modifier = Modifier
             .fillMaxWidth()
             .padding(MainPadding)
-            .clickable { onClick() },
+            .clickable { onClick() }
+            .background(Color.White, shape = RoundedCornerShape(8.dp)),
         shape = RoundedCornerShape(8.dp),
     ) {
         Column(
-            modifier = Modifier.padding(8.dp),
+            modifier = Modifier.padding(0.dp).background(Color.White).fillMaxSize(),
             verticalArrangement = Arrangement.Center
         ) {
             // Affichage de l'image

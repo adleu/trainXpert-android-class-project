@@ -20,9 +20,11 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -40,6 +42,10 @@ import com.example.trainxpert.model.ActivityItem
 import com.example.trainxpert.ui.theme.BottomBarHeight
 import com.example.trainxpert.ui.theme.ButtonColor
 import com.example.trainxpert.ui.theme.ButtonTextSize
+import com.example.trainxpert.ui.theme.CardTitle
+import com.example.trainxpert.ui.theme.FormFontSize
+import com.example.trainxpert.ui.theme.MainPadding
+import com.example.trainxpert.ui.theme.TextFieldFontSizeData
 import com.example.trainxpert.ui.theme.formBackground
 import java.time.LocalDateTime
 
@@ -52,13 +58,22 @@ fun AddActivityScreen(
     backAction: () -> Unit
 ) {
     var selectedActivity by remember { mutableStateOf<ActivityItem?>(null) }
-//    var date by remember { mutableStateOf("") }
-//    var time by remember { mutableStateOf("") }
     var selectedDateTime by remember { mutableStateOf<LocalDateTime?>(LocalDateTime.now()) }
     var duration by remember { mutableStateOf("") }
     var distance by remember { mutableStateOf("") }
     var calories by remember { mutableStateOf("") }
     var dropdownExpanded by remember { mutableStateOf(false) }
+
+    val TextFieldColor = TextFieldDefaults.textFieldColors(
+        containerColor = formBackground,
+        cursorColor = Color.Black,
+        focusedIndicatorColor = Color.Black,
+        unfocusedIndicatorColor = Color.Black,
+        focusedTextColor = Color.Black,
+        unfocusedTextColor = Color.Black
+    )
+
+    val TextFieldTextStyle = LocalTextStyle.current.copy(fontSize = TextFieldFontSizeData, color = CardTitle)
 
     Scaffold(
         topBar = {
@@ -91,13 +106,18 @@ fun AddActivityScreen(
                     value = selectedActivity?.title ?: "",
                     onValueChange = {},
                     readOnly = true,
-                    label = { Text("Activité") },
+                    label = { Text("Activité", fontSize = FormFontSize) },
                     trailingIcon = {
                         IconButton(onClick = { dropdownExpanded = true }) {
                             Icon(Icons.Default.ArrowDropDown, contentDescription = "Dropdown")
                         }
                     },
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(MainPadding),
+                    colors = TextFieldColor,
+                    textStyle = TextFieldTextStyle
+
                 )
 
                 DropdownMenu(
@@ -128,35 +148,17 @@ fun AddActivityScreen(
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
-//
-//                Button(
-//                    onClick = {
-//                    },
-//                    modifier = Modifier
-//                        .padding(16.dp)
-//                        .fillMaxWidth(),
-//                    colors = ButtonColors(formBackground, Color.Black, Color.White, Color.White),
-//                    shape = RoundedCornerShape(5.dp),
-//                    contentPadding = PaddingValues(MainPadding)
-//
-//
-//                ) {
-//                    TextField(
-//                        value = duration,
-//                        onValueChange = { duration = it },
-//                        label = { Text("Durée (min)") },
-//                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-//                        modifier = Modifier.fillMaxWidth()
-//                    )
 
-
-                // Champs Durée, Distance, Calories
                 TextField(
                     value = duration,
                     onValueChange = { duration = it },
-                    label = { Text("Durée (min)") },
+                    label = { Text("Durée (min)", fontSize = FormFontSize) },
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(MainPadding),
+                    colors = TextFieldColor,
+                    textStyle = TextFieldTextStyle
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
@@ -164,11 +166,13 @@ fun AddActivityScreen(
                 TextField(
                     value = distance,
                     onValueChange = { distance = it },
-                    label = { Text("Distance (km)") },
+                    label = { Text("Distance (km)", fontSize = FormFontSize) },
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(16.dp),
+                        .padding(MainPadding),
+                    colors = TextFieldColor,
+                    textStyle = TextFieldTextStyle
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
@@ -176,17 +180,21 @@ fun AddActivityScreen(
                 TextField(
                     value = calories,
                     onValueChange = { calories = it },
-                    label = { Text("Calories brûlées") },
+                    label = { Text("Calories brûlées", fontSize = FormFontSize) },
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                    modifier = Modifier.fillMaxWidth()
-                )
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(MainPadding),
+                    textStyle = TextFieldTextStyle,
+                    colors = TextFieldColor,
+                    )
             }
 
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
                     .align(Alignment.BottomCenter)
-                    .padding(16.dp),
+                    .padding(MainPadding),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
 //                Button(
@@ -196,6 +204,7 @@ fun AddActivityScreen(
 //                ) {
 //                    Text("Annuler", color = Color.White)
 //                }
+
                 Button(
                     onClick = {
                         if (selectedActivity != null && selectedDateTime != null) {

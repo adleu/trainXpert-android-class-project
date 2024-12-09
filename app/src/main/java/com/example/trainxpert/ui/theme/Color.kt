@@ -1,5 +1,7 @@
 package com.example.trainxpert.ui.theme
 
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.ui.graphics.Color
 
 val Purple80 = Color(0xFFD0BCFF)
@@ -16,4 +18,4 @@ val BackgroundCalendarCurrentDay = Color(0xFFFF5722)
 val CardTitle = Color(0xFF3F51B5)
 val CalendarArrowTint = Color.Gray
 val ButtonColor = Color(0xFF007AFF)
-val formBackground = Color(0xFFE3E3E3)
+val formBackground = Color.White
