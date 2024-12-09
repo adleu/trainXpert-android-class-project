@@ -84,7 +84,8 @@ fun NavigationActivityComponent(modifier: Modifier = Modifier) {
                         if (navController.previousBackStackEntry != null) {
                             navController.popBackStack()
                         }
-                    }
+                    },
+
                 )
             }
         }
