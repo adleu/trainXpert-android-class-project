@@ -7,6 +7,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -40,13 +41,11 @@ fun ActivityDetailScreen(
         }
     }
 
-
-
     // Disposez du TTS lors de la sortie de ce composable
     DisposableEffect(Unit) {
         onDispose {
-            tts!!.stop()
-            tts!!.shutdown()
+            tts?.stop()
+            tts?.shutdown()
         }
     }
 
@@ -89,6 +88,24 @@ fun ActivityDetailScreen(
                 }
             )
         },
+        floatingActionButton = {
+            // Bouton flottant pour lire le texte
+            FloatingActionButton(
+                onClick = {
+                    val textToRead = "Pratique: ${activity.pratique}. Conseil: ${activity.conseil}"
+                    tts?.speak(textToRead, TextToSpeech.QUEUE_FLUSH, null, null)
+                },
+                containerColor = Color(0xFF6200EE),
+                contentColor = Color.White,
+                modifier = Modifier.padding(bottom = 48.dp) // Ajoutez un padding en bas pour le remonter
+            ) {
+                Icon(
+                    imageVector = Icons.Default.PlayArrow,
+                    contentDescription = "Lire le texte"
+                )
+            }
+        },
+
         content = { innerPadding ->
             Column(
                 modifier = Modifier
@@ -152,17 +169,6 @@ fun ActivityDetailScreen(
                             text = activity.conseil,
                             style = TextStyle(fontSize = 14.sp, color = Color.Gray)
                         )
-
-                        // Bouton pour lire le texte si la catégorie est "Conseil"
-                        if (activity.category == "Conseil") {
-                            Spacer(modifier = Modifier.height(16.dp))
-                            Button(onClick = {
-                                val textToRead = "Pratique: ${activity.pratique}. Conseil: ${activity.conseil}"
-                                tts!!.speak(textToRead, TextToSpeech.QUEUE_FLUSH, null, null)
-                            }) {
-                                Text(text = "Lire le texte")
-                            }
-                        }
                     }
                 }
             }
