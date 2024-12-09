@@ -24,11 +24,9 @@ fun ActivitySection(
 ) {
     Card(
         modifier = modifier
-            .fillMaxWidth()
-            .padding(MainPadding),
+        .fillMaxWidth().padding(MainPadding),
         shape = RoundedCornerShape(8.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = Color.White
+        colors = CardDefaults.cardColors(containerColor = Color.White
         )
     ) {
         Column(
