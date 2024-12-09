@@ -42,7 +42,7 @@ fun ActivitySection(
 
             // Liste horizontale des cartes
             LazyRow(
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                horizontalArrangement = Arrangement.spacedBy(0.dp),
                 modifier = Modifier.fillMaxWidth()
             ) {
                 items(activities) { activity ->

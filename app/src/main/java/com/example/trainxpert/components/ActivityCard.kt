@@ -10,8 +10,10 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
+import androidx.compose.ui.Alignment
 
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -29,33 +31,45 @@ fun ActivityCard(
 ) {
     Card(
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(MainPadding)
-            .clickable { onClick() }
-            .background(Color.White, shape = RoundedCornerShape(8.dp)),
+            .fillMaxSize() // Taille carrée pour la carte
+            .padding(8.dp) // Réduit l'espacement entre les cartes
+            .clickable { onClick() },
         shape = RoundedCornerShape(8.dp),
+        colors = CardDefaults.cardColors(containerColor = Color.White)
     ) {
         Column(
-            modifier = Modifier.padding(0.dp).background(Color.White).fillMaxSize(),
-            verticalArrangement = Arrangement.Center
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(8.dp), // Ajout de padding interne
+            verticalArrangement = Arrangement.SpaceBetween, // Répartit l'espace entre les éléments
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             // Affichage de l'image
             Image(
                 painter = painterResource(id = imageResId),
                 contentDescription = title,
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .height(100.dp), // Ajustez la hauteur selon vos besoins
+                    .height(125.dp)
+                    .width(125.dp)// Taille réduite de l'image pour libérer de l'espace pour les textes
+                    .clip(RoundedCornerShape(8.dp)),
                 contentScale = ContentScale.Crop
             )
-            Spacer(modifier = Modifier.height(8.dp))
 
-            // Affichage du titre
-            Text(text = title, fontSize = 16.sp, color = Color.Black)
+            // Texte du titre
+            Text(
+                text = title,
+                fontSize = 12.sp, // Taille ajustée pour le titre
+                color = Color.Black,
+                maxLines = 1 // Limitez à une ligne pour éviter le débordement
+            )
 
-            // Affichage du sous-titre
-            Text(text = subtitle, fontSize = 12.sp, color = Color.DarkGray)
+            // Texte du sous-titre
+            Text(
+                text = subtitle,
+                fontSize = 10.sp, // Taille plus petite pour le sous-titre
+                color = Color.Gray,
+                maxLines = 1 // Limitez à une ligne pour éviter le débordement
+            )
         }
     }
 }
-
