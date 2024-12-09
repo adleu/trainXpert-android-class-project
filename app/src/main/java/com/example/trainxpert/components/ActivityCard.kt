@@ -25,7 +25,7 @@ fun ActivityCard(
     subtitle: String,
     imageResId: Int,
     onClick: () -> Unit, // Gestionnaire de clic ajouté
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifierg
 ) {
     Card(
         modifier = Modifier
