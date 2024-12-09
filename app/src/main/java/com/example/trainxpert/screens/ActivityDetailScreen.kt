@@ -22,6 +22,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.trainxpert.model.ActivityItem
+import com.example.trainxpert.ui.theme.ButtonColor
 import com.example.trainxpert.ui.theme.CardTitle
 import java.util.Locale
 
@@ -44,8 +45,10 @@ fun ActivityDetailScreen(
     // Disposez du TTS lors de la sortie de ce composable
     DisposableEffect(Unit) {
         onDispose {
-            tts?.stop()
-            tts?.shutdown()
+            if (tts?.isSpeaking == true) {
+                tts?.stop() // Stop le TTS s'il parle
+            }
+            tts?.shutdown() // Ferme proprement le TTS
         }
     }
 
@@ -78,7 +81,10 @@ fun ActivityDetailScreen(
                     }
                 },
                 navigationIcon = {
-                    IconButton(onClick = backAction) {
+                    IconButton(onClick = {
+                        tts?.stop() // Arrête l'audio
+                        backAction() // Exécute l'action de retour
+                    }) {
                         Icon(
                             imageVector = Icons.Default.ArrowBack,
                             contentDescription = "Retour",
@@ -93,9 +99,14 @@ fun ActivityDetailScreen(
             FloatingActionButton(
                 onClick = {
                     val textToRead = "Pratique: ${activity.pratique}. Conseil: ${activity.conseil}"
-                    tts?.speak(textToRead, TextToSpeech.QUEUE_FLUSH, null, null)
+                    if (tts?.isSpeaking == true) {
+                        tts?.stop() // Arrête le TTS s'il parle déjà
+                    } else {
+                        tts?.speak(textToRead, TextToSpeech.QUEUE_FLUSH, null, null)
+                    }
                 },
-                containerColor = Color(0xFF6200EE),
+                //containerColor = Color(0xFF6200EE),
+                containerColor = ButtonColor,
                 contentColor = Color.White,
                 modifier = Modifier.padding(bottom = 48.dp) // Ajoutez un padding en bas pour le remonter
             ) {
@@ -105,7 +116,6 @@ fun ActivityDetailScreen(
                 )
             }
         },
-
         content = { innerPadding ->
             Column(
                 modifier = Modifier
