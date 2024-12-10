@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.sp
 import com.example.trainxpert.model.SportSession
 import com.example.trainxpert.ui.theme.CardTitle
 import com.example.trainxpert.ui.theme.HistoryCardFontSize
+import com.example.trainxpert.ui.theme.HistoryCardFontSizeDate
 import com.example.trainxpert.ui.theme.HistoryCardPadding
 import com.example.trainxpert.ui.theme.MainPadding
 import com.example.trainxpert.ui.theme.TitleCardFontSize
@@ -58,7 +59,7 @@ fun HistoryCard(session : SportSession){
                     text = session.dateTime.dayOfMonth.toString().padStart(2, '0') +
                             "/${session.dateTime.monthValue}" +
                             "/${session.dateTime.year}",
-                    fontSize = HistoryCardFontSize,
+                    fontSize = HistoryCardFontSizeDate,
                     fontWeight = FontWeight.Bold,
                     color = CardTitle,
                 )
