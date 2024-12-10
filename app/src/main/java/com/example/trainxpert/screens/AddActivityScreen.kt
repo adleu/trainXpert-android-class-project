@@ -15,6 +15,7 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -264,14 +265,15 @@ fun AddActivityScreen(
                             }
                         },
                         confirmButton = {
-                            Button(onClick = {
+                            Button(
+                                colors = ButtonColors(ButtonColor, Color.White, ButtonColor, ButtonColor),
+                                onClick = {
                                 if (newActivityName.isNotBlank()) {
                                     // Ajouter l'activité ou effectuer une action
                                     println("Nouvelle activité ajoutée : $newActivityName")
                                     selectedActivity = newActivityName
                                     showDialog = false
                                     dropdownExpanded = false
-
                                 }
                             }) {
                                 Text("Valider")
@@ -281,6 +283,7 @@ fun AddActivityScreen(
                             TextButton(onClick = {
                                 showDialog = false
                                 dropdownExpanded = false
+
                             }) {
                                 Text("Annuler")
                             }
