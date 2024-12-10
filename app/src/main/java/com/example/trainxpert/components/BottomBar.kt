@@ -74,9 +74,9 @@ fun BottomBar() {
                             Icon(iconn, iconn.name)
                             Text(
                                 text = when (icon.index) {
-                                    0 -> "Home"
-                                    1 -> "Activity"
-                                    2 -> "History"
+                                    0 -> "Acceuil"
+                                    1 -> "Activité"
+                                    2 -> "Historique"
                                     else -> ""
                                 },
                                 style = MaterialTheme.typography.bodySmall,
