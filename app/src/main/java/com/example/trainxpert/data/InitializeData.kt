@@ -10,7 +10,7 @@ suspend fun InitializeData(activityViewModel: ActivityViewModel) {
             ActivityItem(
                 title = "Football",
                 subtitle = "Jouer au football",
-                imageResId = R.drawable.joga,
+                imageResId = R.drawable.football,
                 category = "Sport",
                 pratique = "Entraînez-vous régulièrement sur le terrain.",
                 conseil = "Portez des chaussures adaptées pour éviter les blessures."
@@ -20,7 +20,7 @@ suspend fun InitializeData(activityViewModel: ActivityViewModel) {
             ActivityItem(
                 title = "Basketball",
                 subtitle = "Jouer au basketball",
-                imageResId = R.drawable.joga,
+                imageResId = R.drawable.basket,
                 category = "Sport",
                 pratique = "Faites des exercices de dribble et de shoot.",
                 conseil = "Hydratez-vous fréquemment pendant les sessions."
@@ -30,7 +30,7 @@ suspend fun InitializeData(activityViewModel: ActivityViewModel) {
             ActivityItem(
                 title = "Tennis",
                 subtitle = "Jouer au tennis",
-                imageResId = R.drawable.joga,
+                imageResId = R.drawable.tennis,
                 category = "Sport",
                 pratique = "Travaillez votre revers et votre service.",
                 conseil = "Échauffez-vous avant chaque partie pour éviter les tensions musculaires."
@@ -41,7 +41,7 @@ suspend fun InitializeData(activityViewModel: ActivityViewModel) {
             ActivityItem(
                 title = "Nutrition",
                 subtitle = "Conseils nutrition",
-                imageResId = R.drawable.joga,
+                imageResId = R.drawable.nutrition,
                 category = "Conseil",
                 pratique = "Privilégiez les repas équilibrés riches en légumes.",
                 conseil = "Évitez les aliments transformés et riches en sucre."
@@ -51,7 +51,7 @@ suspend fun InitializeData(activityViewModel: ActivityViewModel) {
             ActivityItem(
                 title = "Santé mentale",
                 subtitle = "Conseils santé mentale",
-                imageResId = R.drawable.joga,
+                imageResId = R.drawable.santemental,
                 category = "Conseil",
                 pratique = "Pratiquez la gratitude tous les matins.",
                 conseil = "Consultez un thérapeute en cas de stress prolongé."
@@ -61,7 +61,7 @@ suspend fun InitializeData(activityViewModel: ActivityViewModel) {
             ActivityItem(
                 title = "Hygiène",
                 subtitle = "Conseils hygiène",
-                imageResId = R.drawable.joga,
+                imageResId = R.drawable.hygiene,
                 category = "Conseil",
                 pratique = "Lavez-vous les mains fréquemment.",
                 conseil = "Changez de brosse à dents tous les trois mois."
@@ -72,7 +72,7 @@ suspend fun InitializeData(activityViewModel: ActivityViewModel) {
             ActivityItem(
                 title = "Méditation guidée",
                 subtitle = "Apprenez à méditer",
-                imageResId = R.drawable.joga,
+                imageResId = R.drawable.meditation,
                 category = "Méditation",
                 pratique = "Suivez des méditations guidées en ligne.",
                 conseil = "Créez un espace calme dédié à votre pratique."
@@ -82,7 +82,7 @@ suspend fun InitializeData(activityViewModel: ActivityViewModel) {
             ActivityItem(
                 title = "Respiration",
                 subtitle = "Techniques de respiration",
-                imageResId = R.drawable.joga,
+                imageResId = R.drawable.respiration,
                 category = "Méditation",
                 pratique = "Essayez la respiration 4-7-8 pour vous détendre.",
                 conseil = "Respirez lentement et profondément pour réduire l'anxiété."
