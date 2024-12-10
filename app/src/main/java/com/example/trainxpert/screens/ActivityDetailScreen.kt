@@ -22,6 +22,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.trainxpert.model.ActivityItem
+import com.example.trainxpert.ui.theme.BottomBarHeight
 import com.example.trainxpert.ui.theme.ButtonColor
 import com.example.trainxpert.ui.theme.CardTitle
 import java.util.Locale
@@ -108,7 +109,7 @@ fun ActivityDetailScreen(
                 //containerColor = Color(0xFF6200EE),
                 containerColor = ButtonColor,
                 contentColor = Color.White,
-                modifier = Modifier.padding(bottom = 48.dp) // Ajoutez un padding en bas pour le remonter
+                modifier = Modifier.padding(bottom = BottomBarHeight) // Ajoutez un padding en bas pour le remonter
             ) {
                 Icon(
                     imageVector = Icons.Default.PlayArrow,
