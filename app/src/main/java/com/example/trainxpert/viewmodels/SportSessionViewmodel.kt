@@ -59,7 +59,7 @@ class SportSessionViewModel(private val dao: SportSessionDao) : ViewModel() {
         }
     }
 
-    fun isDatePresent(date: LocalDate): Boolean {
+    suspend fun isDatePresent(date: LocalDate): Boolean {
         // Convertir LocalDate en Date
         val dateStart = date.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()
         val dateEnd = date.plusDays(1).atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()
