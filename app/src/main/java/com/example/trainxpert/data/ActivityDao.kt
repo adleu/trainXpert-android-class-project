@@ -19,11 +19,11 @@ interface ActivityDao {
     suspend fun getActivitiesByCategory(category: String): List<ActivityItem>
 
     // Insérer une seule activité
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert
     suspend fun insertActivity(activity: ActivityItem)
 
     // Insérer plusieurs activités
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert
     suspend fun insertAll(activities: List<ActivityItem>)
 
     // Supprimer une activité spécifique

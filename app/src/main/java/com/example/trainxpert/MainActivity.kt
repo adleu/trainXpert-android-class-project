@@ -15,6 +15,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.trainxpert.data.AppDatabase
 import com.example.trainxpert.data.InitializeData
+import com.example.trainxpert.model.ActivityItem
 import com.example.trainxpert.ui.theme.TrainXpertTheme
 import com.example.trainxpert.viewmodels.LocalSportSessionViewModel
 import com.example.trainxpert.viewmodels.SportSessionViewModel
@@ -41,14 +42,15 @@ class MainActivity : ComponentActivity() {
 
 
         lifecycleScope.launch {
-//            viewModel.loadSessions()
+            viewModel.loadSessions()
 //            viewModel.deleteAllSessions()
-//            viewModel.addSession("golf", LocalDateTime.of(2024, 11,10,10,10,10) , 10, 10.0,10)
-//            viewModel.addSession("volley", LocalDateTime.of(2024, 11,25,10,10,10) , 10, 10.0,10)
-//            viewModel.addSession("amongus", LocalDateTime.of(2024, 12,1,10,10,10) , 10, 10.0,10)
+//            viewModel.addSession("golf", LocalDateTime.of(2024, 11, 10, 10, 10, 10), 10, 10.0, 10)
+//            viewModel.addSession("volley", LocalDateTime.of(2024, 11, 25, 10, 10, 10), 10, 10.0, 10)
+//            viewModel.addSession("amongus", LocalDateTime.of(2024, 12, 1, 10, 10, 10), 10, 10.0, 10)
 //            viewModel.loadSessions()
             activityViewModel.loadActivities()
             activityViewModel.deleteAllActivities()
+            activityViewModel.loadActivities()
             InitializeData(activityViewModel)
             activityViewModel.loadActivities()
         }

@@ -27,32 +27,32 @@ class ActivityViewModel(private val dao: ActivityDao) : ViewModel() {
     }
 
     // Ajouter une activité
-    fun addActivity(activity: ActivityItem) {
-        viewModelScope.launch(Dispatchers.IO) {
+    suspend fun addActivity(activity: ActivityItem) {
+        viewModelScope.launch {
             dao.insertActivity(activity)
             loadActivities() // Recharger après insertion
         }
     }
 
     // Supprimer une activité
-    fun deleteActivity(activity: ActivityItem) {
-        viewModelScope.launch(Dispatchers.IO) {
+    suspend fun deleteActivity(activity: ActivityItem) {
+        viewModelScope.launch {
             dao.deleteActivity(activity)
             loadActivities() // Recharger après suppression
         }
     }
 
     // Mettre à jour une activité
-    fun updateActivity(activity: ActivityItem) {
-        viewModelScope.launch(Dispatchers.IO) {
+    suspend fun updateActivity(activity: ActivityItem) {
+        viewModelScope.launch{
             dao.updateActivity(activity)
             loadActivities() // Recharger après mise à jour
         }
     }
 
     // Supprimer toutes les activités
-    fun deleteAllActivities() {
-        viewModelScope.launch(Dispatchers.IO) {
+    suspend fun deleteAllActivities() {
+        viewModelScope.launch {
             dao.deleteAllActivities()
             loadActivities() // Recharger après suppression
         }

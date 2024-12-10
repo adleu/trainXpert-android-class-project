@@ -2,11 +2,12 @@ package com.example.trainxpert.data
 
 import ActivityViewModel
 import com.example.trainxpert.R
+import com.example.trainxpert.model.ActivityItem
 
-fun InitializeData(activityViewModel: ActivityViewModel) {
+suspend fun InitializeData(activityViewModel: ActivityViewModel) {
 
         activityViewModel.addActivity(
-            com.example.trainxpert.model.ActivityItem(
+            ActivityItem(
                 title = "Football",
                 subtitle = "Jouer au football",
                 imageResId = R.drawable.joga,
@@ -16,7 +17,7 @@ fun InitializeData(activityViewModel: ActivityViewModel) {
             )
         )
         activityViewModel.addActivity(
-            com.example.trainxpert.model.ActivityItem(
+            ActivityItem(
                 title = "Basketball",
                 subtitle = "Jouer au basketball",
                 imageResId = R.drawable.joga,
@@ -26,7 +27,7 @@ fun InitializeData(activityViewModel: ActivityViewModel) {
             )
         )
         activityViewModel.addActivity(
-            com.example.trainxpert.model.ActivityItem(
+            ActivityItem(
                 title = "Tennis",
                 subtitle = "Jouer au tennis",
                 imageResId = R.drawable.joga,
@@ -37,7 +38,7 @@ fun InitializeData(activityViewModel: ActivityViewModel) {
         )
 
         activityViewModel.addActivity(
-            com.example.trainxpert.model.ActivityItem(
+            ActivityItem(
                 title = "Nutrition",
                 subtitle = "Conseils nutrition",
                 imageResId = R.drawable.joga,
@@ -47,7 +48,7 @@ fun InitializeData(activityViewModel: ActivityViewModel) {
             )
         )
         activityViewModel.addActivity(
-            com.example.trainxpert.model.ActivityItem(
+            ActivityItem(
                 title = "Santé mentale",
                 subtitle = "Conseils santé mentale",
                 imageResId = R.drawable.joga,
@@ -57,7 +58,7 @@ fun InitializeData(activityViewModel: ActivityViewModel) {
             )
         )
         activityViewModel.addActivity(
-            com.example.trainxpert.model.ActivityItem(
+            ActivityItem(
                 title = "Hygiène",
                 subtitle = "Conseils hygiène",
                 imageResId = R.drawable.joga,
@@ -68,7 +69,7 @@ fun InitializeData(activityViewModel: ActivityViewModel) {
         )
 
         activityViewModel.addActivity(
-            com.example.trainxpert.model.ActivityItem(
+            ActivityItem(
                 title = "Méditation guidée",
                 subtitle = "Apprenez à méditer",
                 imageResId = R.drawable.joga,
@@ -78,7 +79,7 @@ fun InitializeData(activityViewModel: ActivityViewModel) {
             )
         )
         activityViewModel.addActivity(
-            com.example.trainxpert.model.ActivityItem(
+            ActivityItem(
                 title = "Respiration",
                 subtitle = "Techniques de respiration",
                 imageResId = R.drawable.joga,
@@ -88,7 +89,7 @@ fun InitializeData(activityViewModel: ActivityViewModel) {
             )
         )
         activityViewModel.addActivity(
-            com.example.trainxpert.model.ActivityItem(
+            ActivityItem(
                 title = "Yoga",
                 subtitle = "Pratique du yoga",
                 imageResId = R.drawable.joga,
