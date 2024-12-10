@@ -130,7 +130,7 @@ fun AddActivityScreen(
                 ) {
                     activities.forEach { activity ->
                         DropdownMenuItem(
-                            text = { Text(activity.title) },
+                            text = { Text(activity.title, fontSize = 20.sp) },
                             onClick = {
                                 selectedActivity = activity
                                 dropdownExpanded = false
@@ -138,6 +138,7 @@ fun AddActivityScreen(
                         )
                     }
                 }
+
 
                 Spacer(modifier = Modifier.height(16.dp))
 
