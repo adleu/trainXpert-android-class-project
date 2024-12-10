@@ -31,14 +31,14 @@ fun ActivitySection(
         )
     ) {
         Column(
-            modifier = Modifier.padding(8.dp) // Padding interne
+            modifier = Modifier.padding(0.dp) // Padding interne
         ) {
             // Titre de la section
             Text(
                 text = title,
                 fontSize = 20.sp,
                 color = CardTitle, // Couleur du texte
-                modifier = Modifier.padding(bottom = 8.dp)
+                modifier = Modifier.padding(8.dp)
             )
 
             // Liste horizontale des cartes
