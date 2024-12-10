@@ -40,7 +40,7 @@ fun ActivityCard(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(8.dp), // Ajout de padding interne
+                .padding(10.dp), // Ajout de padding interne
             verticalArrangement = Arrangement.SpaceBetween, // Répartit l'espace entre les éléments
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -58,7 +58,7 @@ fun ActivityCard(
             // Texte du titre
             Text(
                 text = title,
-                fontSize = 12.sp, // Taille ajustée pour le titre
+                fontSize = 16.sp, // Taille ajustée pour le titre
                 color = Color.Black,
                 maxLines = 1 // Limitez à une ligne pour éviter le débordement
             )
@@ -66,7 +66,7 @@ fun ActivityCard(
             // Texte du sous-titre
             Text(
                 text = subtitle,
-                fontSize = 10.sp, // Taille plus petite pour le sous-titre
+                fontSize = 14.sp, // Taille plus petite pour le sous-titre
                 color = Color.Gray,
                 maxLines = 1 // Limitez à une ligne pour éviter le débordement
             )

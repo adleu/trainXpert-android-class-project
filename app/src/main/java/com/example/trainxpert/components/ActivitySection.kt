@@ -14,6 +14,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.ui.graphics.Color
 import com.example.trainxpert.ui.theme.CardTitle
 import com.example.trainxpert.ui.theme.MainPadding
+import com.example.trainxpert.ui.theme.activitiesSectionPadding
 
 @Composable
 fun ActivitySection(
@@ -24,7 +25,7 @@ fun ActivitySection(
 ) {
     Card(
         modifier = modifier
-        .fillMaxWidth().padding(MainPadding),
+        .fillMaxWidth().padding(activitiesSectionPadding),
         shape = RoundedCornerShape(8.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White
         )
