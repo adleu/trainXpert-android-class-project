@@ -13,6 +13,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DropdownMenu
@@ -23,6 +24,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
@@ -34,6 +36,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -57,14 +60,16 @@ fun AddActivityScreen(
     onSave: (String, LocalDateTime, Int, Double?, Int?) -> Unit,
     backAction: () -> Unit
 ) {
-    var selectedActivity by remember { mutableStateOf<ActivityItem?>(null) }
+    var selectedActivity by remember { mutableStateOf<String?>(null) }
     var selectedDateTime by remember { mutableStateOf<LocalDateTime?>(LocalDateTime.now()) }
     var duration by remember { mutableStateOf("") }
     var distance by remember { mutableStateOf("") }
     var calories by remember { mutableStateOf("") }
     var dropdownExpanded by remember { mutableStateOf(false) }
+    var showDialog by remember { mutableStateOf(false) }
+    var newActivityName by remember { mutableStateOf("") }
 
-    val TextFieldColor = TextFieldDefaults.textFieldColors(
+    val textFieldColor = TextFieldDefaults.textFieldColors(
         containerColor = formBackground,
         cursorColor = Color.Black,
         focusedIndicatorColor = Color.Black,
@@ -73,7 +78,7 @@ fun AddActivityScreen(
         unfocusedTextColor = Color.Black
     )
 
-    val TextFieldTextStyle = LocalTextStyle.current.copy(fontSize = TextFieldFontSizeData, color = CardTitle)
+    val textFieldTextStyle = LocalTextStyle.current.copy(fontSize = TextFieldFontSizeData, color = CardTitle)
 
     Scaffold(
         topBar = {
@@ -103,7 +108,7 @@ fun AddActivityScreen(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 TextField(
-                    value = selectedActivity?.title ?: "",
+                    value = selectedActivity ?: "",
                     onValueChange = {},
                     readOnly = true,
                     label = { Text("Activité", fontSize = FormFontSize) },
@@ -115,8 +120,8 @@ fun AddActivityScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(MainPadding),
-                    colors = TextFieldColor,
-                    textStyle = TextFieldTextStyle
+                    colors = textFieldColor,
+                    textStyle = textFieldTextStyle
 
                 )
 
@@ -128,14 +133,25 @@ fun AddActivityScreen(
                         .background(formBackground)
                         .align(Alignment.CenterHorizontally)
                 ) {
+                    DropdownMenuItem(
+                        text={
+                            Text(
+                                text = "+ autre",
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 20.sp
+                        )},
+                        onClick = {showDialog = true}
+                    )
                     activities.forEach { activity ->
-                        DropdownMenuItem(
-                            text = { Text(activity.title, fontSize = 20.sp) },
-                            onClick = {
-                                selectedActivity = activity
-                                dropdownExpanded = false
-                            }
-                        )
+                        if (activity.category == "Sport" || activity.category == "Méditation") {
+                            DropdownMenuItem(
+                                text = { Text(activity.title, fontSize = 20.sp) },
+                                onClick = {
+                                    selectedActivity = activity.title
+                                    dropdownExpanded = false
+                                }
+                            )
+                        }
                     }
                 }
 
@@ -158,8 +174,8 @@ fun AddActivityScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(MainPadding),
-                    colors = TextFieldColor,
-                    textStyle = TextFieldTextStyle
+                    colors = textFieldColor,
+                    textStyle = textFieldTextStyle
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
@@ -172,8 +188,8 @@ fun AddActivityScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(MainPadding),
-                    colors = TextFieldColor,
-                    textStyle = TextFieldTextStyle
+                    colors = textFieldColor,
+                    textStyle = textFieldTextStyle
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
@@ -186,8 +202,8 @@ fun AddActivityScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(MainPadding),
-                    textStyle = TextFieldTextStyle,
-                    colors = TextFieldColor,
+                    textStyle = textFieldTextStyle,
+                    colors = textFieldColor,
                     )
             }
 
@@ -210,7 +226,7 @@ fun AddActivityScreen(
                     onClick = {
                         if (selectedActivity != null && selectedDateTime != null) {
                             onSave(
-                                selectedActivity!!.title,
+                                selectedActivity!!,
                                 selectedDateTime!!,
                                 duration.toIntOrNull() ?: 0,
                                 distance.toDoubleOrNull(),
@@ -228,6 +244,47 @@ fun AddActivityScreen(
                         "Enregistrer",
                         color = Color.White,
                         fontSize = ButtonTextSize
+                    )
+                }
+
+                if (showDialog) {
+                    AlertDialog(
+                        onDismissRequest = { showDialog = false },
+                        title = { Text("Nouvelle activité") },
+                        text = {
+                            Column {
+                                Text("Veuillez entrer le nom de la nouvelle activité :")
+                                Spacer(modifier = Modifier.height(8.dp))
+                                TextField(
+                                    value = newActivityName,
+                                    onValueChange = { newActivityName = it },
+                                    placeholder = { Text("Nom de l'activité") },
+                                    singleLine = true
+                                )
+                            }
+                        },
+                        confirmButton = {
+                            Button(onClick = {
+                                if (newActivityName.isNotBlank()) {
+                                    // Ajouter l'activité ou effectuer une action
+                                    println("Nouvelle activité ajoutée : $newActivityName")
+                                    selectedActivity = newActivityName
+                                    showDialog = false
+                                    dropdownExpanded = false
+
+                                }
+                            }) {
+                                Text("Valider")
+                            }
+                        },
+                        dismissButton = {
+                            TextButton(onClick = {
+                                showDialog = false
+                                dropdownExpanded = false
+                            }) {
+                                Text("Annuler")
+                            }
+                        }
                     )
                 }
             }
