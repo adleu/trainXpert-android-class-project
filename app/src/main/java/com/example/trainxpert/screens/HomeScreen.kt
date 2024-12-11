@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -30,6 +31,7 @@ import ufr.mim.netfloux.components.RawButton
 
 @Composable
 fun HomeScreen(modifier: Modifier,onDetails: ((SportSession) -> Unit)){
+    var showTips by remember { mutableStateOf(true) }
 
     Column(
         modifier = modifier
@@ -38,39 +40,49 @@ fun HomeScreen(modifier: Modifier,onDetails: ((SportSession) -> Unit)){
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        // Texte de bienvenue
-        Row(
+        LazyColumn(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 32.dp, end = 16.dp),
-            horizontalArrangement = Arrangement.Center
-        ){
-            Image(
-                painter = painterResource(id = R.drawable.icon_xpert),
-                contentDescription = "",
-                Modifier.size(108.dp)
-            )
+                .weight(1f)
+                .fillMaxWidth(),
+            verticalArrangement = Arrangement.Top,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            item {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 32.dp, end = 16.dp),
+                    horizontalArrangement = Arrangement.Center
+                ){
+                    Image(
+                        painter = painterResource(id = R.drawable.icon_xpert),
+                        contentDescription = "",
+                        Modifier.size(108.dp)
+                    )
 
-            Text(
-                text = "Bienvenue sur TrainXpert",
-                style = TextStyle(
-                    fontWeight = FontWeight.SemiBold,
-                    fontSize = 22.sp,
-                ),
-                modifier = Modifier.align(Alignment.CenterVertically)
+                    Text(
+                        text = "Bienvenue sur TrainXpert",
+                        style = TextStyle(
+                            fontWeight = FontWeight.SemiBold,
+                            fontSize = 22.sp,
+                        ),
+                        modifier = Modifier.align(Alignment.CenterVertically)
+                    )
+                }
 
-            )
-        }
+                RawButton(onClick = {showTips = !showTips }) {
 
-        var showTips by remember { mutableStateOf(true) }
-        RawButton(onClick = {showTips = !showTips }) {
-
-            when(showTips){
-                true -> DailyTipCard()
-                false -> StatCard()
+                    when(showTips){
+                        true -> DailyTipCard()
+                        false -> StatCard()
+                    }
+                }
+                SportCalendarScreen(onDetails)
             }
+
         }
-        SportCalendarScreen(onDetails)
+        // Texte de bienvenue
+
     }
 
 }
