@@ -15,5 +15,7 @@ val ButtonTextSize = 18.sp
 val BottomBarHeight = 100.dp
 val FormFontSize = 20.sp
 val TextFieldFontSizeData = 25.sp
+val ActivityCardFontSize = 20.sp
+
 
 
