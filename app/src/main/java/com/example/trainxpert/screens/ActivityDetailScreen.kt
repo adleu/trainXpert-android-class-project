@@ -145,9 +145,11 @@ fun ActivityDetailScreen(
                 contentDescription = activity.title,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(200.dp)
+                    .height(300.dp)
                     .clip(RoundedCornerShape(8.dp)),
-                contentScale = ContentScale.Crop
+               contentScale = ContentScale.Crop
+               ,
+
             )
 
             Spacer(modifier = Modifier.height(16.dp))
