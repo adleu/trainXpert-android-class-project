@@ -201,7 +201,7 @@ fun SessionDetailsCard(navController: NavController, session: SportSession) {
                                 fontWeight = FontWeight.Bold, color = CardTitle
                             )
                         ) {
-                            append(session.distanceInKm.toString() + " Kcal")
+                            append(session.distanceInKm.toString() + " Km")
                         }
                         append(".")
                     },
@@ -239,13 +239,13 @@ fun SessionDetailsCard(navController: NavController, session: SportSession) {
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                     )
                     TextField(
-                        value = newDistance.toString(),
-                        onValueChange = { newDistance = it.toDoubleOrNull() ?: 0.0 },
+                        value = (newDistance ?: 0.0).toString(),
+                        onValueChange = { newDistance = it.toDoubleOrNull() ?: .0 },
                         label = { Text("Distance (km)") },
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                     )
                     TextField(
-                        value = newCalories.toString(),
+                        value = (newCalories ?: 0).toString(),
                         onValueChange = { newCalories = it.toIntOrNull() ?: 0 },
                         label = { Text("Calories (kcal)") },
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),

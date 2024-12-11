@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -103,113 +104,104 @@ fun AddActivityScreen(
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-
-                TextField(value = selectedActivity ?: "",
-                    onValueChange = {},
-                    readOnly = true,
-                    label = { Text("Activité", fontSize = FormFontSize) },
-                    trailingIcon = {
-                        IconButton(onClick = { dropdownExpanded = true }) {
-                            Icon(Icons.Default.ArrowDropDown, contentDescription = "Dropdown")
-                        }
-                    },
+                LazyColumn(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(MainPadding),
-                    colors = textFieldColor,
-                    textStyle = textFieldTextStyle
-                )
-
-
-//                TextField(
-//                    value = selectedActivity ?: "",
-//                    onValueChange = {},
-//                    readOnly = true,
-//                    label = { Text("Activité", fontSize = FormFontSize) },
-//                    trailingIcon = {
-//                        IconButton(onClick = { dropdownExpanded = true }) {
-//                            Icon(Icons.Default.ArrowDropDown, contentDescription = "Dropdown")
-//                        }
-//                    },
-//                    modifier = Modifier
-//                        .fillMaxWidth()
-//                        .padding(MainPadding),
-//                    colors = textFieldColor,
-//                    textStyle = textFieldTextStyle
-//
-//                )
-
-                DropdownMenu(
-                    expanded = dropdownExpanded,
-                    onDismissRequest = { dropdownExpanded = false },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(formBackground)
-                        .align(Alignment.CenterHorizontally)
+                        .weight(1f)
+                        .fillMaxWidth(),
+                    verticalArrangement = Arrangement.Top,
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    DropdownMenuItem(text = {
-                        Text(
-                            text = "+ autre", fontWeight = FontWeight.Bold, fontSize = 20.sp
+                    item{
+                        TextField(value = selectedActivity ?: "",
+                            onValueChange = {},
+                            readOnly = true,
+                            label = { Text("Activité", fontSize = FormFontSize) },
+                            trailingIcon = {
+                                IconButton(onClick = { dropdownExpanded = true }) {
+                                    Icon(Icons.Default.ArrowDropDown, contentDescription = "Dropdown")
+                                }
+                            },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(MainPadding),
+                            colors = textFieldColor,
+                            textStyle = textFieldTextStyle
                         )
-                    }, onClick = { showDialog = true })
-                    activities.forEach { activity ->
-                        if (activity.category == "Sport" || activity.category == "Méditation") {
-                            DropdownMenuItem(text = { Text(activity.title, fontSize = 20.sp) },
-                                onClick = {
-                                    selectedActivity = activity.title
-                                    dropdownExpanded = false
-                                })
+
+                        DropdownMenu(
+                            expanded = dropdownExpanded,
+                            onDismissRequest = { dropdownExpanded = false },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .background(formBackground)
+                                .align(Alignment.CenterHorizontally)
+                        ) {
+                            DropdownMenuItem(text = {
+                                Text(
+                                    text = "+ autre", fontWeight = FontWeight.Bold, fontSize = 20.sp
+                                )
+                            }, onClick = { showDialog = true })
+                            activities.forEach { activity ->
+                                if (activity.category == "Sport" || activity.category == "Méditation") {
+                                    DropdownMenuItem(text = { Text(activity.title, fontSize = 20.sp) },
+                                        onClick = {
+                                            selectedActivity = activity.title
+                                            dropdownExpanded = false
+                                        })
+                                }
+                            }
                         }
+
+
+//                        Spacer(modifier = Modifier.height(16.dp))
+
+                        // DateTime Picker Field
+                        DateTimePickerField(initialDateTime = LocalDateTime.now(),
+                            onDateTimeSelected = { selectedDateTime = it })
+
+//                        Spacer(modifier = Modifier.height(16.dp))
+
+                        TextField(
+                            value = duration,
+                            onValueChange = { duration = it },
+                            label = { Text("Durée (min)", fontSize = FormFontSize) },
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(MainPadding),
+                            colors = textFieldColor,
+                            textStyle = textFieldTextStyle
+                        )
+
+//                        Spacer(modifier = Modifier.height(16.dp))
+
+                        TextField(
+                            value = distance,
+                            onValueChange = { distance = it },
+                            label = { Text("Distance (km)", fontSize = FormFontSize) },
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(MainPadding),
+                            colors = textFieldColor,
+                            textStyle = textFieldTextStyle
+                        )
+
+//                        Spacer(modifier = Modifier.height(16.dp))
+
+                        TextField(
+                            value = calories,
+                            onValueChange = { calories = it },
+                            label = { Text("Calories brûlées", fontSize = FormFontSize) },
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(MainPadding),
+                            textStyle = textFieldTextStyle,
+                            colors = textFieldColor,
+                        )
                     }
                 }
-
-
-                Spacer(modifier = Modifier.height(16.dp))
-
-                // DateTime Picker Field
-                DateTimePickerField(initialDateTime = LocalDateTime.now(),
-                    onDateTimeSelected = { selectedDateTime = it })
-
-                Spacer(modifier = Modifier.height(16.dp))
-
-                TextField(
-                    value = duration,
-                    onValueChange = { duration = it },
-                    label = { Text("Durée (min)", fontSize = FormFontSize) },
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(MainPadding),
-                    colors = textFieldColor,
-                    textStyle = textFieldTextStyle
-                )
-
-                Spacer(modifier = Modifier.height(16.dp))
-
-                TextField(value = distance,
-                    onValueChange = { distance = it },
-                    label = { Text("Distance (km)", fontSize = FormFontSize) },
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(MainPadding),
-                    colors = textFieldColor,
-                    textStyle = textFieldTextStyle
-                )
-
-                Spacer(modifier = Modifier.height(16.dp))
-
-                TextField(
-                    value = calories,
-                    onValueChange = { calories = it },
-                    label = { Text("Calories brûlées", fontSize = FormFontSize) },
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(MainPadding),
-                    textStyle = textFieldTextStyle,
-                    colors = textFieldColor,
-                )
             }
 
             Column(
