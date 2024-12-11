@@ -73,6 +73,13 @@ class SportSessionViewModel(private val dao: SportSessionDao) : ViewModel() {
             dao.deleteAllSessions()
         }
     }
+
+    fun updateSportSession(session: SportSession) {
+        viewModelScope.launch(Dispatchers.IO) {
+            dao.updateSession(session)
+            loadSessions()
+        }
+    }
 }
 
 class SportSessionViewModelFactory(private val dao: SportSessionDao) : ViewModelProvider.Factory {

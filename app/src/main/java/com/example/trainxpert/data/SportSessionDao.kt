@@ -19,4 +19,7 @@ interface SportSessionDao {
 
     @Query("DELETE FROM sport_sessions")
     suspend fun deleteAllSessions()
+
+    @Update
+    suspend fun updateSession(session: SportSession)
 }
