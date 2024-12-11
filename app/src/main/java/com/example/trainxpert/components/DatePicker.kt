@@ -9,12 +9,14 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.AlertDialogDefaults.shape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -25,6 +27,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.trainxpert.ui.theme.ButtonColor
@@ -41,7 +44,8 @@ import java.util.Calendar
 @Composable
 fun DateTimePickerField(
     initialDateTime: LocalDateTime? = null,
-    onDateTimeSelected: (LocalDateTime) -> Unit
+    onDateTimeSelected: (LocalDateTime) -> Unit,
+    theme: Int = 0
 ) {
     var selectedDateTime by remember {
         mutableStateOf(initialDateTime ?: LocalDateTime.now())
@@ -98,23 +102,42 @@ fun DateTimePickerField(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.Start
         ){
-            Text(
+            when(theme){
+                0 -> {
+                    Text(
 //            text = selectedDateTime.toString().replace("T", " "),
 //            style = MaterialTheme.typography.bodyMedium,
-                text = String.format(
-                    "%02d/%02d/%04d    %02dh%02d",
-                    selectedDateTime.dayOfMonth,
-                    selectedDateTime.monthValue,
-                    selectedDateTime.year,
-                    selectedDateTime.hour,
-                    selectedDateTime.minute
-                ),
-                color = CardTitle,
-                style = TextStyle(
+                        text = String.format(
+                            "%02d/%02d/%04d    %02dh%02d",
+                            selectedDateTime.dayOfMonth,
+                            selectedDateTime.monthValue,
+                            selectedDateTime.year,
+                            selectedDateTime.hour,
+                            selectedDateTime.minute
+                        ),
+                        color = CardTitle,
+                        style = TextStyle(
 //                    fontWeight = FontWeight.Normal,
-                    fontSize = TextFieldFontSizeData,
-                ),
-            )
+                            fontSize = TextFieldFontSizeData,
+                        ),
+                    )
+                }
+                1 -> {
+                    Text(
+                        text = String.format(
+                            "%02d/%02d/%04d    %02dh%02d",
+                            selectedDateTime.dayOfMonth,
+                            selectedDateTime.monthValue,
+                            selectedDateTime.year,
+                            selectedDateTime.hour,
+                            selectedDateTime.minute
+                        ),
+                        color = Color.Black,
+                        fontSize = FormFontSize
+                    )
+                }
+            }
+
         }
 
     }
