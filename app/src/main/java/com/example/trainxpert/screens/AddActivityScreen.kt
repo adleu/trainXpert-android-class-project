@@ -59,7 +59,7 @@ fun AddActivityScreen(
     activities: List<ActivityItem>,
     onCancel: () -> Unit,
     onSave: (String, LocalDateTime, Int, Double?, Int?) -> Unit,
-    backAction: () -> Unit
+    backAction: () -> Unit,
 ) {
     var selectedActivity by remember { mutableStateOf<String?>(null) }
     var selectedDateTime by remember { mutableStateOf<LocalDateTime?>(LocalDateTime.now()) }
@@ -79,23 +79,18 @@ fun AddActivityScreen(
         unfocusedTextColor = Color.Black
     )
 
-    val textFieldTextStyle = LocalTextStyle.current.copy(fontSize = TextFieldFontSizeData, color = CardTitle)
+    val textFieldTextStyle =
+        LocalTextStyle.current.copy(fontSize = TextFieldFontSizeData, color = CardTitle)
 
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text("Ajouter une activité", fontSize = 20.sp) },
-                navigationIcon = {
-                    IconButton(onClick = onCancel) {
-                        Icon(
-                            imageVector = Icons.Default.ArrowBack,
-                            contentDescription = "Retour"
-                        )
-                    }
-                }
-            )
-        }
-    ) { innerPadding ->
+    Scaffold(topBar = {
+        TopAppBar(title = { Text("Ajouter une activité", fontSize = 20.sp) }, navigationIcon = {
+            IconButton(onClick = onCancel) {
+                Icon(
+                    imageVector = Icons.Default.ArrowBack, contentDescription = "Retour"
+                )
+            }
+        })
+    }) { innerPadding ->
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -108,8 +103,8 @@ fun AddActivityScreen(
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                TextField(
-                    value = selectedActivity ?: "",
+
+                TextField(value = selectedActivity ?: "",
                     onValueChange = {},
                     readOnly = true,
                     label = { Text("Activité", fontSize = FormFontSize) },
@@ -123,8 +118,26 @@ fun AddActivityScreen(
                         .padding(MainPadding),
                     colors = textFieldColor,
                     textStyle = textFieldTextStyle
-
                 )
+
+
+//                TextField(
+//                    value = selectedActivity ?: "",
+//                    onValueChange = {},
+//                    readOnly = true,
+//                    label = { Text("Activité", fontSize = FormFontSize) },
+//                    trailingIcon = {
+//                        IconButton(onClick = { dropdownExpanded = true }) {
+//                            Icon(Icons.Default.ArrowDropDown, contentDescription = "Dropdown")
+//                        }
+//                    },
+//                    modifier = Modifier
+//                        .fillMaxWidth()
+//                        .padding(MainPadding),
+//                    colors = textFieldColor,
+//                    textStyle = textFieldTextStyle
+//
+//                )
 
                 DropdownMenu(
                     expanded = dropdownExpanded,
@@ -134,24 +147,18 @@ fun AddActivityScreen(
                         .background(formBackground)
                         .align(Alignment.CenterHorizontally)
                 ) {
-                    DropdownMenuItem(
-                        text={
-                            Text(
-                                text = "+ autre",
-                                fontWeight = FontWeight.Bold,
-                                fontSize = 20.sp
-                        )},
-                        onClick = {showDialog = true}
-                    )
+                    DropdownMenuItem(text = {
+                        Text(
+                            text = "+ autre", fontWeight = FontWeight.Bold, fontSize = 20.sp
+                        )
+                    }, onClick = { showDialog = true })
                     activities.forEach { activity ->
                         if (activity.category == "Sport" || activity.category == "Méditation") {
-                            DropdownMenuItem(
-                                text = { Text(activity.title, fontSize = 20.sp) },
+                            DropdownMenuItem(text = { Text(activity.title, fontSize = 20.sp) },
                                 onClick = {
                                     selectedActivity = activity.title
                                     dropdownExpanded = false
-                                }
-                            )
+                                })
                         }
                     }
                 }
@@ -160,10 +167,8 @@ fun AddActivityScreen(
                 Spacer(modifier = Modifier.height(16.dp))
 
                 // DateTime Picker Field
-                DateTimePickerField(
-                    initialDateTime = LocalDateTime.now(),
-                    onDateTimeSelected = { selectedDateTime = it }
-                )
+                DateTimePickerField(initialDateTime = LocalDateTime.now(),
+                    onDateTimeSelected = { selectedDateTime = it })
 
                 Spacer(modifier = Modifier.height(16.dp))
 
@@ -181,8 +186,7 @@ fun AddActivityScreen(
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                TextField(
-                    value = distance,
+                TextField(value = distance,
                     onValueChange = { distance = it },
                     label = { Text("Distance (km)", fontSize = FormFontSize) },
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
@@ -205,15 +209,14 @@ fun AddActivityScreen(
                         .padding(MainPadding),
                     textStyle = textFieldTextStyle,
                     colors = textFieldColor,
-                    )
+                )
             }
 
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
                     .align(Alignment.BottomCenter)
-                    .padding(MainPadding),
-                verticalArrangement = Arrangement.spacedBy(16.dp)
+                    .padding(MainPadding), verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
 //                Button(
 //                    onClick = onCancel,
@@ -242,15 +245,12 @@ fun AddActivityScreen(
                         .fillMaxWidth(0.5f)
                 ) {
                     Text(
-                        "Enregistrer",
-                        color = Color.White,
-                        fontSize = ButtonTextSize
+                        "Enregistrer", color = Color.White, fontSize = ButtonTextSize
                     )
                 }
 
                 if (showDialog) {
-                    AlertDialog(
-                        onDismissRequest = { showDialog = false },
+                    AlertDialog(onDismissRequest = { showDialog = false },
                         title = { Text("Nouvelle activité") },
                         text = {
                             Column {
@@ -265,9 +265,12 @@ fun AddActivityScreen(
                             }
                         },
                         confirmButton = {
-                            Button(
-                                colors = ButtonColors(ButtonColor, Color.White, ButtonColor, ButtonColor),
-                                onClick = {
+                            Button(colors = ButtonColors(
+                                ButtonColor,
+                                Color.White,
+                                ButtonColor,
+                                ButtonColor
+                            ), onClick = {
                                 if (newActivityName.isNotBlank()) {
                                     // Ajouter l'activité ou effectuer une action
                                     println("Nouvelle activité ajoutée : $newActivityName")
@@ -287,8 +290,7 @@ fun AddActivityScreen(
                             }) {
                                 Text("Annuler")
                             }
-                        }
-                    )
+                        })
                 }
             }
         }
