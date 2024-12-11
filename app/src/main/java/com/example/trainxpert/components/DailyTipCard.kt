@@ -23,6 +23,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.trainxpert.data.getDailyTip
 import com.example.trainxpert.ui.theme.CardTitle
 import com.example.trainxpert.ui.theme.MainPadding
 import com.example.trainxpert.ui.theme.TitleCardFontSize
@@ -54,7 +55,7 @@ fun DailyTipCard(){
 
             // Contenu du conseil
             Text(
-                text = "10 minutes de marche rapide par jour peuvent améliorer votre humeur.",
+                text = getDailyTip(),
                 fontSize = 18.sp,
                 fontWeight = FontWeight.SemiBold,
                 color = Color(0xFF000000) // Noir
