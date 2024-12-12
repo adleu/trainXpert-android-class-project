@@ -57,7 +57,7 @@ val MIGRATION_1_2 = object : Migration(1, 2) {
 // Migration de version 2 à 3 : Ajouter les colonnes "conseil" et "pratique" à la table "activities"
 val MIGRATION_2_3 = object : androidx.room.migration.Migration(2, 3) {
     override fun migrate(database: androidx.sqlite.db.SupportSQLiteDatabase) {
-        // Ajoutez les colonnes pratique et conseil si elles n'existent pas
+
         database.execSQL(
             "ALTER TABLE activities ADD COLUMN pratique TEXT NOT NULL DEFAULT ''"
         )

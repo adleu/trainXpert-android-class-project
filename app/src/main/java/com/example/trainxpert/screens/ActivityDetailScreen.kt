@@ -55,23 +55,21 @@ import java.util.Locale
 fun ActivityDetailScreen(
     backAction: () -> Unit, activity: ActivityItem
 ) {
-    val context = LocalContext.current // Obtenez le contexte local
-
-    // Déclarez TTS comme une variable mutable à l'intérieur de remember
+    val context = LocalContext.current
     var tts: TextToSpeech? by remember { mutableStateOf(null) }
     tts = TextToSpeech(context) { status ->
         if (status == TextToSpeech.SUCCESS) {
-            tts?.language = Locale.getDefault() // Configurez la langue
+            tts?.language = Locale.getDefault()
         }
     }
 
-    // Disposez du TTS lors de la sortie de ce composable
+
     DisposableEffect(Unit) {
         onDispose {
             if (tts?.isSpeaking == true) {
-                tts?.stop() // Stop le TTS s'il parle
+                tts?.stop()
             }
-            tts?.shutdown() // Ferme proprement le TTS
+            tts?.shutdown()
         }
     }
 

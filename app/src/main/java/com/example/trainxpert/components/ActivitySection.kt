@@ -20,7 +20,7 @@ import com.example.trainxpert.ui.theme.activitiesSectionPadding
 fun ActivitySection(
     title: String,
     activities: List<ActivityItem>,
-    onActivityClick: (ActivityItem) -> Unit, // Gestionnaire de clic ajouté
+    onActivityClick: (ActivityItem) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Card(
@@ -31,7 +31,7 @@ fun ActivitySection(
         )
     ) {
         Column(
-            modifier = Modifier.padding(0.dp) // Padding interne
+            modifier = Modifier.padding(0.dp)
         ) {
             // Titre de la section
             Text(
