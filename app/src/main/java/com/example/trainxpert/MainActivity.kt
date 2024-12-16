@@ -1,10 +1,8 @@
 package com.example.trainxpert
 
-//mport com.example.trainxpert.viewmodels.ActivityViewModel
-//import com.example.trainxpert.viewmodels.ActivityViewModelFactory
 import ActivityViewModel
 import ActivityViewModelFactory
-import BottomBar
+import com.example.trainxpert.components.BottomBar
 import LocalActivityViewModel
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -15,13 +13,11 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.trainxpert.data.AppDatabase
 import com.example.trainxpert.data.InitializeData
-import com.example.trainxpert.model.ActivityItem
 import com.example.trainxpert.ui.theme.TrainXpertTheme
 import com.example.trainxpert.viewmodels.LocalSportSessionViewModel
 import com.example.trainxpert.viewmodels.SportSessionViewModel
 import com.example.trainxpert.viewmodels.SportSessionViewModelFactory
 import kotlinx.coroutines.launch
-import java.time.LocalDateTime
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,23 +35,14 @@ class MainActivity : ComponentActivity() {
             ActivityViewModelFactory(activityDao)
         }
 
-
-
         lifecycleScope.launch {
             viewModel.loadSessions()
-//            viewModel.deleteAllSessions()
-//            viewModel.addSession("golf", LocalDateTime.of(2024, 11, 10, 10, 10, 10), 10, 10.0, 10)
-//            viewModel.addSession("volley", LocalDateTime.of(2024, 11, 25, 10, 10, 10), 10, 10.0, 10)
-//            viewModel.addSession("amongus", LocalDateTime.of(2024, 12, 1, 10, 10, 10), 10, 10.0, 10)
-//            viewModel.loadSessions()
             activityViewModel.loadActivities()
             activityViewModel.deleteAllActivities()
             activityViewModel.loadActivities()
             InitializeData(activityViewModel)
             activityViewModel.loadActivities()
         }
-
-
 
         setContent {
             //passe LocalSportSessionViewModel a tous les composant fils

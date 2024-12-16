@@ -1,6 +1,7 @@
+package com.example.trainxpert.components
+
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -26,15 +27,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.unit.dp
 import com.example.trainxpert.navigation.NavigationActivityComponent
 import com.example.trainxpert.navigation.NavigationHistoryComponent
 import com.example.trainxpert.navigation.NavigationHomeComponent
-import com.example.trainxpert.screens.ActivityScreen
-import com.example.trainxpert.screens.HistoryScreen
-import com.example.trainxpert.screens.HomeScreen
 import com.example.trainxpert.ui.theme.BottomBarHeight
-import com.example.trainxpert.ui.theme.MainGreyBackground
 
 data class MyIcon(
     val index: Int,
@@ -53,15 +49,6 @@ fun BottomBar() {
     )
 
     Scaffold(
-//        modifier = Modifier.background(MainGreyBackground),
-
-//        floatingActionButton =  {
-//            if (selectedTab == 0) {
-//                FloatingActionButton(onClick = { println("action")}) {
-//                    Icon(Icons.Outlined.Add, Icons.Outlined.Add.name)
-//                }
-//            }
-//        },
         bottomBar = {
             BottomAppBar(
                 modifier = Modifier.height(BottomBarHeight),
@@ -71,16 +58,19 @@ fun BottomBar() {
                     IconButton(onClick = icon.action, modifier = Modifier.weight(1f)) {
                         Column(horizontalAlignment = Alignment.CenterHorizontally) {
                             val iconn = if (selectedTab == icon.index) icon.selectedIcon else icon.unselectedIcon
-                            Icon(iconn, iconn.name)
+                            // Idée : donner la même couleur au texte et à l'icône quand la tab est sélectionnée
+                            // Color.Black ou une autre couleur de votre thème est préférable à Color.Blue, qui est trop tape à l'oeil
+                            val tabColor = if (selectedTab == icon.index) Color.Black else Color.Gray
+                            Icon(iconn, iconn.name, tint = tabColor)
                             Text(
                                 text = when (icon.index) {
-                                    0 -> "Acceuil"
+                                    0 -> "Accueil"
                                     1 -> "Activité"
                                     2 -> "Historique"
                                     else -> ""
                                 },
                                 style = MaterialTheme.typography.bodySmall,
-                                color = if (selectedTab == icon.index) Color.Blue else Color.Gray
+                                color = tabColor
                             )
                         }
                     }
@@ -92,13 +82,14 @@ fun BottomBar() {
             targetState = selectedTab,
             animationSpec = tween(0),
             label = "Crossfade selected tab",
+            // Il vaut mieux utiliser le Scaffold padding directement sur le Crossfade
+            // pour éviter d'avoir à le réécrire sur tous les autres composants
+            modifier = Modifier.padding(scaffoldPadding)
         ) { tabIndex ->
             when(tabIndex) {
-                0 -> NavigationHomeComponent(modifier = Modifier.padding(scaffoldPadding))
-               // 1 -> ActivityScreen(modifier = Modifier.padding(scaffoldPadding))
-                1 -> NavigationActivityComponent(modifier = Modifier.padding(scaffoldPadding))
-
-                2 -> NavigationHistoryComponent(modifier = Modifier.padding(scaffoldPadding))
+                0 -> NavigationHomeComponent()
+                1 -> NavigationActivityComponent()
+                2 -> NavigationHistoryComponent()
             }
         }
     }

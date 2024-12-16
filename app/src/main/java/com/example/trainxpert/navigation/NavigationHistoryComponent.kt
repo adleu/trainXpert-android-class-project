@@ -13,7 +13,7 @@ import com.example.trainxpert.screens.HistoryScreen
 import com.example.trainxpert.viewmodels.LocalSportSessionViewModel
 
 @Composable
-fun NavigationHistoryComponent(modifier: Modifier) {
+fun NavigationHistoryComponent(modifier: Modifier = Modifier) {
     val navController = rememberNavController()
     val viewModel = LocalSportSessionViewModel.current
 
@@ -48,27 +48,3 @@ fun NavigationHistoryComponent(modifier: Modifier) {
         }
     }
 }
-
-
-//@Composable
-//fun NavigationHistoryComponent(modifier : Modifier){
-//    val historyNavController = rememberNavController()
-//
-//
-//    NavHost(navController = historyNavController, startDestination = ScreensHistory.HistoryScreen.name){
-//        composable(ScreensHistory.HistoryScreen.name){
-//            HistoryScreen(modifier = modifier,
-//                onDetails = {
-////                    session = session,
-//                    historyNavController.navigate(ScreensHistory.HistoryDetailScreen.name)
-//                }
-//            )
-//        }
-//
-//        composable(
-//            route = ScreensHistory.HistoryDetailScreen.name
-//        ){
-//            HistoryDetailScreen(session)
-//        }
-//    }
-//}

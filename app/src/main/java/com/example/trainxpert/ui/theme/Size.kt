@@ -10,7 +10,7 @@ val TitleCardFontSize = 18.sp
 //History
 val HistoryCardFontSize = 18.sp
 val HistoryCardPadding = 5.dp
-val HistoryCardFontSizeDate = 20.sp
+val HistoryCardFontSizeDate = 16.sp
 val ButtonTextSize = 18.sp
 val BottomBarHeight = 100.dp
 val FormFontSize = 20.sp

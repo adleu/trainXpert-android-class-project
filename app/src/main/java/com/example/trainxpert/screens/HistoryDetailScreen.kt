@@ -40,78 +40,47 @@ import com.example.trainxpert.ui.theme.MainGreyBackground
 import com.example.trainxpert.ui.theme.MainPadding
 import com.example.trainxpert.viewmodels.LocalSportSessionViewModel
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HistoryDetailScreen(backAction: () -> Unit, session: SportSession?, navController: NavController) {
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                colors = TopAppBarColors(
-                    MainGreyBackground,
-                    MainGreyBackground,
-                    Color.Black,
-                    Color.Black,
-                    MainGreyBackground
-                ),
-                title = {
-
-                    Row(
-//                        modifier = Modifier
-//                            .fillMaxWidth()
-//                            .padding(bottom = 32.dp, end = 16.dp),
-                        horizontalArrangement = Arrangement.Center
-                    ) {
-//                        Icon(
-//                            imageVector = Icons.Filled.DateRange,
-//                            contentDescription = Icons.Filled.DateRange.name,
-//                            modifier = Modifier.size(48.dp),
-//                        )
-
-
-                        Text(
-                            text = "Ma session",
-                            style = TextStyle(
-                                fontWeight = FontWeight.SemiBold,
-                                fontSize = 22.sp,
-                            ),
-                            modifier = Modifier.align(Alignment.CenterVertically)
-
-                        )
-                    }
-                },
-                navigationIcon = {
-                    IconButton(onClick = backAction) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
-                            contentDescription = Icons.Default.ArrowBack.name,
-                            tint = Color.Black
-                        )
-                    }
-                },
-            )
-        },
+fun HistoryDetailScreen(
+    backAction: () -> Unit,
+    session: SportSession?,
+    navController: NavController
+) {
+    // Pas besoin de tout remettre dans un Scaffold, car il y en a déjà un à la racine de l'app (BottomBar)
+    // Si vous voulez avoir un bouton retour, faites un composant à part
+    // Ça évite d'avoir à tout remettre dans un Scaffold
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(MainPadding)
+            .background(MainGreyBackground),
+        verticalArrangement = Arrangement.Top,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        innerPadding ->
-        Surface(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(MainGreyBackground)
-                .padding(innerPadding)
-                .padding(MainPadding)
-        )
-        {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(0.dp)
-                    .background(MainGreyBackground),
-                verticalArrangement = Arrangement.Top,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                session?.let {
-                    SessionDetailsCard(session = session, navController = navController)
-                }
+        // Back button
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(16.dp, alignment = Alignment.Start)
+        ) {
+            IconButton(onClick = backAction) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
+                    contentDescription = Icons.Default.ArrowBack.name,
+                    tint = Color.Black
+                )
             }
+
+            Text(
+                text = "Ma session",
+                style = TextStyle(
+                    fontWeight = FontWeight.SemiBold,
+                    fontSize = 22.sp,
+                ),
+                modifier = Modifier.align(Alignment.CenterVertically)
+            )
+        }
+        session?.let {
+            SessionDetailsCard(session = session, navController = navController)
         }
     }
 }

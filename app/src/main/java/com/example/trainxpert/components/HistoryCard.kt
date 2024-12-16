@@ -11,7 +11,14 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.FitnessCenter
+import androidx.compose.material.icons.outlined.HourglassEmpty
+import androidx.compose.material.icons.outlined.LocalFireDepartment
+import androidx.compose.material.icons.outlined.SportsBasketball
+import androidx.compose.material.icons.outlined.SportsSoccer
 import androidx.compose.material3.Card
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -37,23 +44,27 @@ import java.time.ZoneId
 @SuppressLint("SimpleDateFormat")
 @Composable
 fun HistoryCard(session : SportSession){
-
-
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(HistoryCardPadding)
+            // Pas besoin de padding ici, car celui-ci est déjà défini dans la Lazy Column
             .background(Color.White, shape = RoundedCornerShape(8.dp)),
         shape = RoundedCornerShape(8.dp),
     ) {
         Column(
             modifier = Modifier
                 .background(Color.White)
+                // Ici OK, car c'est le padding intérieur de la Card
                 .padding(MainPadding)
-                .fillMaxWidth()
+                .fillMaxWidth(),
+            // On met un léger espacement pour aérer le composant
+            verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             Row(
-                Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
+                    // Espace entre le titre et le reste
+                    .padding(bottom = 8.dp)
             ) {
                 Text(
                     text = session.dateTime.dayOfMonth.toString().padStart(2, '0') +
@@ -63,16 +74,17 @@ fun HistoryCard(session : SportSession){
                     fontWeight = FontWeight.Bold,
                     color = CardTitle,
                 )
-//                Spacer(modifier = Modifier.width(8.dp))
             }
-//            Spacer(modifier = Modifier.height(24.dp))
 
-            Row(){
-                Text(
-                    text = "temps : ",
-                    fontSize = HistoryCardFontSize,
-                    fontWeight = FontWeight.Bold,
-                    color = Color(0xFF000000) // Noir
+            Row(
+                // Espacement entre l'icône et le texte
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                // Utiliser une icône au lieu d'un texte rend la Card plus "user-friendly"
+                Icon(
+                    imageVector = Icons.Outlined.HourglassEmpty,
+                    contentDescription = Icons.Outlined.HourglassEmpty.name,
+                    tint = Color(0xFF000000) // Noir
                 )
 
                 Text(
@@ -90,13 +102,19 @@ fun HistoryCard(session : SportSession){
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Row(
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text(
-                        text = "activité : ",
-                        fontSize = HistoryCardFontSize,
-                        fontWeight = FontWeight.Bold,
-                        color = Color(0xFF000000)
+                    Icon(
+                        imageVector = when(session.activityName.lowercase()) {
+                            "basketball" -> Icons.Outlined.SportsBasketball
+                            "football" -> Icons.Outlined.SportsSoccer
+                            // etc..., on pourrait changer l'icône en fonction de l'activité
+                            // et en mettre une par défaut
+                            else -> Icons.Outlined.FitnessCenter
+                        },
+                        contentDescription = "sport icon",
+                        tint = Color(0xFF000000)
                     )
                     Text(
                         text = session.activityName,
@@ -107,18 +125,17 @@ fun HistoryCard(session : SportSession){
                 }
 
                 Row(
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     session.caloriesBurned?.let{
-                        Text(
-                            text = "Kcal : ",
-                            fontSize = HistoryCardFontSize,
-                            fontWeight = FontWeight.Bold,
-                            color = Color(0xFF000000),
-                            textAlign = TextAlign.End,
+                        Icon(
+                            imageVector = Icons.Outlined.LocalFireDepartment,
+                            contentDescription = Icons.Outlined.LocalFireDepartment.name,
+                            tint = Color(0xFF000000)
                         )
                         Text(
-                            text = session.caloriesBurned.toString(),
+                            text = session.caloriesBurned.toString() + " kcal",
                             fontSize = HistoryCardFontSize,
                             fontWeight = FontWeight.Normal,
                             color = Color(0xFF000000),

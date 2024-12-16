@@ -15,7 +15,7 @@ import com.example.trainxpert.screens.HomeScreen
 import com.example.trainxpert.viewmodels.LocalSportSessionViewModel
 
 @Composable
-fun NavigationHomeComponent(modifier: Modifier) {
+fun NavigationHomeComponent(modifier: Modifier = Modifier) {
     val navController = rememberNavController()
     val viewModel = LocalSportSessionViewModel.current
 

@@ -46,7 +46,6 @@ fun HistoryScreen(modifier: Modifier, onDetails: ((SportSession) -> Unit)) {
                 .padding(bottom = 32.dp, end = 16.dp),
             horizontalArrangement = Arrangement.Center
         ) {
-//            Icons.Filled.DateRange
             Icon(
                 imageVector = Icons.Filled.DateRange,
                 contentDescription = Icons.Filled.DateRange.name,
@@ -68,12 +67,15 @@ fun HistoryScreen(modifier: Modifier, onDetails: ((SportSession) -> Unit)) {
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp)
+                // Pas besoin de répéter le padding horizontal,
+                // il est déjà défini dans la colonne principale
+                .padding(vertical = 16.dp)
         ) {
             items(sessions) { session ->
                 RawButton(onClick = {
                     onDetails(session)
                 }){
+                    // Bien d'avoir mis la Card dans un composant à part
                     HistoryCard(session)
                 }
             }
