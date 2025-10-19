@@ -50,6 +50,5 @@ Contributing
 - Create a branch named feature/your-feature (e.g., feature/login).
 - Submit a pull request describing your changes.
 
-Contact
-- Maintainer: maintainer@example.com (replace with the real contact)
+
 
